@@ -1,5 +1,5 @@
 ---
-title: "Learning resources"
+title: "学习资源"
 section: learning
 layout: default
 ---
@@ -12,7 +12,7 @@ Our website provides a [Getting Started](/getting-started/introduction.html) gui
 
 The Elixir Community has also produced plenty of resources to explore Elixir from different backgrounds and other perspectives. We are sure you will find a resource that follows your pace and interests.
 
-## Learn Elixir
+## 学习 Elixir
 
 <h4 class="resource">Programming Elixir</h4>
 
@@ -65,7 +65,7 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <div class="clear"></div>
 
-## Screencasts
+## 演示
 
 <h4 class="resource">Elixir Sips</h4>
 
@@ -79,7 +79,7 @@ The intended audience ranges from someone entirely new to the Elixir language, t
 
 <div class="clear"></div>
 
-## In-depth Resources
+## 深入学习资源
 
 <h4 class="resource">Études for Elixir</h4>
 
