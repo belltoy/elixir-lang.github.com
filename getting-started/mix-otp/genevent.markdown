@@ -12,7 +12,7 @@ In this chapter, we will explore GenEvent, another behaviour provided by Elixir 
 
 There are two events we are going to emit: one for every time a bucket is added to the registry and another when it is removed from it.
 
-## Event managers
+## 事件管理器
 
 Let's start a new `iex -S mix` session and explore the GenEvent API a bit:
 
@@ -66,7 +66,7 @@ Therefore, `sync_notify/2` and `notify/2` are analogous to `call/2` and `cast/2`
 
 Be sure to check other functionality provided by GenEvent in its [module documentation](/docs/stable/elixir/#!GenEvent.html). For now we have enough knowledge to add an event manager to our application.
 
-## Registry events
+## 注册事件
 
 In order to emit events, we need to change the registry to work with an event manager. While we could automatically start the event manager when the registry is started, for example in the `init/1` callback, it is preferrable to pass the event manager pid/name to `start_link`, decoupling the start of the event manager from the registry.
 
@@ -186,7 +186,7 @@ The changes are straightforward. We now pass the event manager we received as an
 
 Run the test suite, and all tests should be green again.
 
-## Event streams
+## 事件流
 
 One last functionality worth exploring from `GenEvent` is the ability to consume its events as a stream:
 

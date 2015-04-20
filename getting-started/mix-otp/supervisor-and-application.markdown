@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Supervisor and Application
+title: Supervisor 和 Application
 redirect_from: /getting_started/mix_otp/5.html
 ---
 
@@ -14,7 +14,7 @@ When things fail, your first reaction may be: "let's rescue those errors". But, 
 
 In this chapter, we are going to learn about supervisors and also about applications. We are going to create not one, but two supervisors, and use them to supervise our processes.
 
-## Our first supervisor
+## 我们的第一个 supervisor
 
 Creating a supervisor is not much different from creating a GenServer. We are going to define a module named `KV.Supervisor`, which will use the [Supervisor](/docs/stable/elixir/#!Supervisor.html) behaviour, inside the `lib/kv/supervisor.ex` file:
 
@@ -65,7 +65,7 @@ When we started the supervisor tree, both the event manager and registry worker 
 
 In practice though, we rarely start the application supervisor manually. Instead it is started as part of the application callback.
 
-## Understanding applications
+## 理解 applications
 
 We have been working inside an application this entire time. Every time we changed a file and ran `mix compile`, we could see `Generated kv.app` message in the compilation output.
 
@@ -87,7 +87,7 @@ It would be pretty boring to update this file manually every time we add a new m
 
 We can also configure the generated `.app` file by customizing the values returned by the `application/0` inside our `mix.exs` project file. We will get to that in upcoming chapters.
 
-### Starting applications
+### 启动 applications
 
 When we define an `.app` file, which is the application definition, we are able to start and stop the application as a whole. We haven't worried about this so far for two reasons:
 
@@ -138,7 +138,7 @@ Nothing really exciting happens but it shows how we can control our application.
 
 > When you run `iex -S mix`, it is equivalent to running `iex -S mix run`. So whenever you need to pass more options to mix when starting iex, it's just a matter of typing `iex -S mix run` and then passing any options the `run` command accepts. You can find more information about `run` by running `mix help run` in your shell.
 
-### The application callback
+### Application 的回调
 
 Since we spent all this time talking about how applications are started and stopped, there must be a way to do something useful when the application starts. And indeed, there is!
 
@@ -180,7 +180,7 @@ iex> KV.Registry.lookup(KV.Registry, "shopping")
 
 Excellent!
 
-### Projects or applications?
+### 项目还是应用？
 
 Mix makes a distinction between projects and applications. Based on the current contents of our `mix.exs` file, we would say we have a Mix project that defines the `:kv` application. As we will see in later chapters, there are projects that don't define any application.
 
@@ -326,7 +326,7 @@ and
 
 Those changes should be enough to make our tests pass! To complete our task, we just need to update our supervisor to also take the buckets supervisor as child.
 
-## Supervision trees
+## 监控树
 
 In order to use the buckets supervisor in our application, we need to add it as a child of `KV.Supervisor`. Notice we are beginning to have supervisors that supervise other supervisors, forming so-called "supervision trees."
 

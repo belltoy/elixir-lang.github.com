@@ -65,7 +65,7 @@ This book is a set of recipes grouped by topic that acts as a reference to get i
 
 <div class="clear"></div>
 
-## 演示
+## 视频教程
 
 <h4 class="resource">Elixir Sips</h4>
 

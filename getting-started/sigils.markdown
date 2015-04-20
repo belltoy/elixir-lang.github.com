@@ -14,7 +14,7 @@ One of Elixir's goals is extensibility: developers should be able to extend the 
 
 In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (`~`) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.
 
-## Regular expressions
+## 正则表达式
 
 The most common sigil in Elixir is `~r`, which is used to create [regular expressions](https://en.wikipedia.org/wiki/Regular_Expressions):
 
@@ -54,7 +54,7 @@ So far, all examples have used `/` to delimit a regular expression. However sigi
 
 The reason behind supporting different delimiters is that different delimiters can be more suited for different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for other sigils, as we will see in the next section.
 
-## Strings, char lists and words sigils
+## Strings, char lists 和 words sigils
 
 Besides regular expressions, Elixir ships with three other sigils.
 
@@ -92,7 +92,7 @@ iex> ~w(foo bar bat)a
 [:foo, :bar, :bat]
 ```
 
-## Interpolation and escaping in sigils
+## Sigil 中的插值和转义
 
 Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both `~s` and `~S` will return strings, the former allows escape codes and interpolation while the latter does not:
 
@@ -161,7 +161,7 @@ Converts double-quotes to single-quotes.
 def convert(...)
 ```
 
-## Custom sigils
+## 自定义 sigils
 
 As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil `~r/foo/i` is equivalent to calling the `sigil_r` function with a binary and a char list as argument:
 

@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: case, cond and if
+title: case, cond 和 if
 redirect_from: /getting_started/5.html
 ---
 
@@ -8,11 +8,11 @@ redirect_from: /getting_started/5.html
 
 {% include toc.html %}
 
-In this chapter, we will learn about the `case`, `cond` and `if` control-flow structures.
+在本章中，我们将会学习关于 `case`, `cond` 和 `if` 的流程控制结构。
 
 ## `case`
 
-`case` allows us to compare a value against many patterns until we find a matching one:
+`case` 允许我们将一个值与多个模式对比，直到我们找到匹配的那一个：
 
 ```iex
 iex> case {1, 2, 3} do
@@ -25,7 +25,7 @@ iex> case {1, 2, 3} do
 ...> end
 ```
 
-If you want to pattern match against an existing variable, you need to use the `^` operator:
+如果你要匹配一个已存在的变量，你需要用到 `^` 操作符：
 
 ```iex
 iex> x = 1
@@ -36,7 +36,7 @@ iex> case 10 do
 ...> end
 ```
 
-Clauses also allow extra conditions to be specified via guards:
+分句也允许通过守卫指定附加条件：
 
 ```iex
 iex> case {1, 2, 3} do
@@ -47,18 +47,18 @@ iex> case {1, 2, 3} do
 ...> end
 ```
 
-The first clause above will only match when `x` is positive.
+上面的第一个分句只有当 `x` 为正时才会匹配。
 
-## Expressions in guard clauses
+##守卫语句中的表达式
 
-The Erlang Virtual Machine (VM) only allows a limited set of expressions in guards:
+在 Erlang 虚拟机 (VM) 中，只允许一些有限的表达式作为守卫：
 
-* comparison operators (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`)
-* boolean operators (`and`, `or`) and negation operators (`not`, `!`)
-* arithmetic operators (`+`, `-`, `*`, `/`)
-* `<>` and `++` as long as the left side is a literal
-* the `in` operator
-* all the following type check functions:
+* 比较操作符 (`==`, `!=`, `===`, `!==`, `>`, `<`, `<=`, `>=`)
+* 布尔操作符 (`and`, `or`) 和 非操作符 (`not`, `!`)
+* 算术操作符 (`+`, `-`, `*`, `/`)
+* 只要左侧是一个字面值就可以用 `<>` 和 `++`
+* `in` 操作符
+* 所有下列的类型检查函数：
     * `is_atom/1`
     * `is_binary/1`
     * `is_bitstring/1`
@@ -75,7 +75,7 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `is_port/1`
     * `is_reference/1`
     * `is_tuple/1`
-* plus these functions:
+* 加上这些函数：
     * `abs(number)`
     * `bit_size(bitstring)`
     * `byte_size(bitstring)`
@@ -93,9 +93,9 @@ The Erlang Virtual Machine (VM) only allows a limited set of expressions in guar
     * `trunc(number)`
     * `tuple_size(tuple)`
 
-Additionally, users may define their own guard functions, usually starting with "is_".
+另外，用户可能会定义他们自己的守卫函数，通常以 "is_" 开头。
 
-Keep in mind errors in guards do not leak but simply make the guard fail:
+记住守卫中的错误是不可见的，但是会使守卫失败：
 
 ```iex
 iex> hd(1)
@@ -108,7 +108,7 @@ iex> case 1 do
 "Got 1"
 ```
 
-If none of the clauses match, an error is raised:
+如果没有一个分句匹配，会引发一个错误：
 
 ```iex
 iex> case :ok do
@@ -117,7 +117,7 @@ iex> case :ok do
 ** (CaseClauseError) no case clause matching: :ok
 ```
 
-Note anonymous functions can also have multiple clauses and guards:
+注意匿名函数也可以有多个分句和守卫：
 
 ```elixir
 iex> f = fn
@@ -131,11 +131,11 @@ iex> f.(-1, 3)
 -3
 ```
 
-The number of arguments in each anonymous function clause needs to be the same, otherwise an error is raised.
+匿名函数中每个分句的参数数量必须相同，否则会报错。
 
 ## `cond`
 
-`case` is useful when you need to match against different values. However, in many circumstances, we want to check different conditions and find the first one that evaluates to true. In such cases, one may use `cond`:
+当你需要匹配不同的值的时候 `case` 很有用。然而，在很多情况下，我们要检查不同的条件并找到第一个为真。在这种情况下，可以使用 `cond`：
 
 ```iex
 iex> cond do
@@ -149,9 +149,9 @@ iex> cond do
 "But this will"
 ```
 
-This is equivalent to `else if` clauses in many imperative languages (although used way less frequently here).
+这等价于很多命令式语言中的 `else if` 分句 （尽管 Elixir 中很少用到）。
 
-If none of the conditions return true, an error is raised. For this reason, it may be necessary to add a final condition, equal to `true`, which will always match:
+如果没有条件返回真，会报错。因此，可能有必要加一个最终条件为 `true`，这样总能匹配到：
 
 ```iex
 iex> cond do
@@ -164,7 +164,7 @@ iex> cond do
 ...> end
 ```
 
-Finally, note `cond` considers any value besides `nil` and `false` to be true:
+最后，注意 `cond` 会把除了 `nil` 和 `false` 之后的所有值认为真：
 
 ```iex
 iex> cond do
@@ -174,9 +174,9 @@ iex> cond do
 "1 is considered as true"
 ```
 
-## `if` and `unless`
+## `if` 和 `unless`
 
-Besides `case` and `cond`, Elixir also provides the macros `if/2` and `unless/2` which are useful when you need to check for just one condition:
+除了 `case` 和 `cond`， 当你只需要检查一个条件的时候， Elixir 还提供了 `if/2` 和 `unless/2` 这两个有用的宏：
 
 ```iex
 iex> if true do
@@ -189,9 +189,9 @@ iex> unless true do
 nil
 ```
 
-If the condition given to `if/2` returns `false` or `nil`, the body given between `do/end` is not executed and it simply returns `nil`. The opposite happens with `unless/2`.
+如果给到 `if/2` 的条件为 `false` 或 `nil`， 在 `do/end` 之间的代码就不会执行，而是简单地返回 `nil`。 `unless/2` 则相反。
 
-They also support `else` blocks:
+它们还支持 `else` 块：
 
 ```iex
 iex> if nil do
@@ -202,18 +202,18 @@ iex> if nil do
 "This will"
 ```
 
-> Note: An interesting note regarding `if/2` and `unless/2` is that they are implemented as macros in the language; they aren't special language constructs as they would be in many languages. You can check the documentation and the source of `if/2` in [the `Kernel` module docs](/docs/stable/elixir/#!Kernel.html). The `Kernel` module is also where operators like `+/2` and functions like `is_function/2` are defined, all automatically imported and available in your code by default.
+> 注意： 有趣的是 `if/2` 和 `unless/2` 在这个语言中是以宏的形式实现的； 它们不是特殊的语言结构，不像其它语言中那样。 你可以在 [`Kernel` 模块文档](/docs/stable/elixir/#!Kernel.html) 中查阅 `if/2` 的文档和代码。 类似 `+/2` 这样的操作符和 `is_function/2` 这样的函数都定义在 `Kernel` 模块中，默认会自动引入你的代码。
 
-## `do/end` blocks
+## `do/end` 块
 
-At this point, we have learned four control structures: `case`, `cond`, `if` and `unless`, and they were all wrapped in `do/end` blocks. It happens we could also write `if` as follows:
+到目前为止，我们已经学习了四种控制结构： `case`, `cond`, `if` 和 `unless`, 他们会被 `do/end` 块所包围。 往往 `if` 也可以写成如下的形式：
 
 ```iex
 iex> if true, do: 1 + 2
 3
 ```
 
-In Elixir, `do/end` blocks are a convenience for passing a group of expressions to `do:`. These are equivalent:
+在 Elixir 中， `do/end` 块是把一组表达式传给 `do:` 的简便写法。 下面两者是等价的：
 
 ```iex
 iex> if true do
@@ -228,14 +228,14 @@ iex> if true, do: (
 13
 ```
 
-We say the second syntax is using **keyword lists**. We can pass `else` using this syntax:
+我们说第二种语法是用到了 **关键字列表**。 我们也可以用这种语法传递 `else`：
 
 ```iex
 iex> if false, do: :this, else: :that
 :that
 ```
 
-One thing to keep in mind when using `do/end` blocks is they are always bound to the outermost function call. For example, the following expression:
+要牢记的是，当使用 `do/end` 块时，它们总是与最外层的函数绑定。例如，下面的表达式：
 
 ```iex
 iex> is_number if true do
@@ -243,7 +243,7 @@ iex> is_number if true do
 ...> end
 ```
 
-Would be parsed as:
+会被解析成：
 
 ```iex
 iex> is_number(if true) do
@@ -251,7 +251,7 @@ iex> is_number(if true) do
 ...> end
 ```
 
-Which leads to an undefined function error as Elixir attempts to invoke `is_number/2`. Adding explicit parentheses is enough to resolve the ambiguity:
+这会导致 Elixir 尝试去调用 `is_number/2` 而引发一个未定义函数的错误。 加上圆括号可以解决这种歧义：
 
 ```iex
 iex> is_number(if true do
@@ -260,4 +260,4 @@ iex> is_number(if true do
 true
 ```
 
-Keyword lists play an important role in the language and are quite common in many functions and macros. We will explore them a bit more in a future chapter. Now it is time to talk about "Binaries, strings and char lists".
+关键字列表在这个语言中扮演了一个很重要的角色，在很多函数和宏中都很普遍。我们将在以后的一章中对它们进行更进一步的探索。 现在是时候谈谈关于 「二进制，字符串和字符列表」了。

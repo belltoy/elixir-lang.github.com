@@ -9,7 +9,7 @@ redirect_from: /getting-started/struct.html
 
 {% include toc.html %}
 
-In [chapter 7](/getting-started/maps-and-dicts.html) we learned about maps:
+在 [第七章](/getting-started/maps-and-dicts.html) 中我们已经学习了 map：
 
 ```iex
 iex> map = %{a: 1, b: 2}
@@ -20,11 +20,11 @@ iex> %{map | a: 3}
 %{a: 3, b: 2}
 ```
 
-Structs are extensions built on top of maps that provide compile-time checks and default values.
+Struct 只是构建在 map 之上的扩展，它提供了编译期检查和默认值。
 
-## Defining structs
+## 定义 struct
 
-To define a struct, the `defstruct` construct is used:
+定义一个 struct，要用到 `defstruct` 语法结构：
 
 ```iex
 iex> defmodule User do
@@ -32,11 +32,11 @@ iex> defmodule User do
 ...> end
 ```
 
-The keyword list used with `defstruct` defines what fields the struct will have along with their default values.
+用在 `defstruct` 后面的关键字列表定义了这个 struct 的字段，并且指定了他们的默认值。
 
-Structs take the name of the module they're defined in. In the example above, we defined a struct named `User`.
+Struct 使用定义它们的模块名作为名字。在上面的例子中，我们定义了一个名为 `User` 的 struct。
 
-We can now create `User` structs by using a syntax similar to the one used to create maps:
+我们现在可以通过使用一个类似用于创建 map 的语法来创建一个 `User` struct：
 
 ```iex
 iex> %User{}
@@ -45,16 +45,16 @@ iex> %User{name: "Meg"}
 %User{age: 27, name: "Meg"}
 ```
 
-Structs provide *compile-time* guarantees that only the fields (and *all* of them) defined through `defstruct` will be allowed to exist in a struct:
+Struct 提供了 *编译期* 的保证，只有用 `defstruct` 定义的字段（它们中的 *全部*）才会被允许存在于 struct 中：
 
 ```iex
 iex> %User{oops: :field}
 ** (CompileError) iex:3: unknown key :oops for struct User
 ```
 
-## Accessing and updating structs
+## 访问和更新 struct
 
-When we discussed maps, we showed how we can access and update the fields of a map. The same techniques (and the same syntax) apply to structs as well:
+当我们谈论到 map 的时候，我们展示了我们如何访问和更新一个 map 的字段。同样的技术（和同样的语法）也适用于 struct：
 
 ```iex
 iex> john = %User{}
@@ -67,9 +67,9 @@ iex> %{meg | oops: :field}
 ** (ArgumentError) argument error
 ```
 
-When using the update syntax (`|`), the <abbr title="Virtual Machine">VM</abbr> is aware that no new keys will be added to the struct, allowing the maps underneath to share their structure in memory. In the example above, both `john` and `meg` share the same key structure in memory.
+当使用更新语法 （`|`） 的时候，<abbr title="Virtual Machine">VM</abbr> 知道到没有新的键会被加入到 struct 中，允许底层的 map 在内存中共享它们的结构。在上面的例子中， `john` 和 `meg` 在内存中共享了键结构。
 
-Structs can also be used in pattern matching, both for matching on the value of specific keys as well as for ensuring that the matching value is a struct of the same type as the matched value.
+Struct 同样可以用在模式匹配，无论是在指定键的值上匹配还是匹配一个 struct 的类型。
 
 ```iex
 iex> %User{name: name} = john
@@ -80,9 +80,9 @@ iex> %User{} = %{}
 ** (MatchError) no match of right hand side value: %{}
 ```
 
-## Structs are just bare maps underneath
+## Struct 内部只是裸 map
 
-In the example above, pattern matching works because underneath structs are just bare maps with a fixed set of fields. As maps, structs store a "special" field named `__struct__` that holds the name of the struct:
+在上面的例子中，模式匹配可以工作是因为在底层 struct 只是裸 map 和一个固定大小的字段集。与 map 相比，struct 保存了一个名为 `__struct__` 的特殊字段，用于保存 struct 的名字：
 
 ```iex
 iex> is_map(john)
@@ -91,7 +91,7 @@ iex> john.__struct__
 User
 ```
 
-Notice that we referred to structs as **bare** maps because none of the protocols implemented for maps are available for structs. For example, you can't enumerate nor access a struct:
+注意到我们提到 struct 的时候称 **裸** map，是因为 map 实现的协议都无法用于 struct。例如，你不能枚举或访问一个 struct：
 
 ```iex
 iex> john = %User{}
@@ -102,14 +102,14 @@ iex> Enum.each john, fn({field, value}) -> IO.puts(value) end
 ** (Protocol.UndefinedError) protocol Enumerable not implemented for %User{age: 27, name: "John"}
 ```
 
-A struct also is not a dictionary and therefore can't be used with the functions from the `Dict` module:
+一个 struct 也不是一个字典，因此也不能用于 `Dict` 模块中的函数：
 
 ```iex
 iex> Dict.get(%User{}, :name)
 ** (UndefinedFunctionError) undefined function: User.fetch/2
 ```
 
-However, since structs are just maps, they work with the functions from the `Map` module:
+然而，由于 struct 只是 map，你可以将它们用于 `Map` 模块中的函数：
 
 ```iex
 iex> kurt = Map.put(%User{}, :name, "Kurt")
@@ -120,4 +120,4 @@ iex> Map.keys(john)
 [:__struct__, :age, :name]
 ```
 
-We will cover how structs interact with protocols in the next chapter.
+在下一章中我们将涉及 struct 如何与协议交互。

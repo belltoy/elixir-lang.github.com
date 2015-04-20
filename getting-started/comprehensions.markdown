@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Comprehensions
+title: 列表解析
 redirect_from: /getting_started/17.html
 ---
 
@@ -8,27 +8,27 @@ redirect_from: /getting_started/17.html
 
 {% include toc.html %}
 
-In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the `for` special form.
+在 Elixir 中，经常遍历一个可枚举类型，过滤掉其中的一些结果，映射它的值到另一个列表。列表解析对于这一种结构是一种语法糖：用 `for` 这个特殊的形式把这些常见的任务组织起来。
 
-For example, we can map a list of integers into their squared values:
+举个例子，我们可以对一个列表把整数值映射到它的平方值列表：
 
 ```iex
 iex> for n <- [1, 2, 3, 4], do: n * n
 [1, 4, 9, 16]
 ```
 
-A comprehension is made of three parts: generators, filters and collectables.
+一个列表解析包含三个部分：生成器，过滤器和集合。
 
-## Generators and filters
+## 生成器和过滤器
 
-In the expression above, `n <- [1, 2, 3, 4]` is the **generator**. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:
+在上面的表达式中， `n <- [1, 2, 3, 4]` 是 **生成器**。它从字面上生成值用于列表解析。任意的可枚举类型都可以传入生成器表达式的右边：
 
 ```iex
 iex> for n <- 1..4, do: n * n
 [1, 4, 9, 16]
 ```
 
-Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are *ignored*. Imagine that, instead of a range, we have a keyword list where the key is the atom `:good` or `:bad` and we only want to compute the square of the `:good` values:
+生成器表达式还支持在左侧进行模式匹配；所有不匹配的值会被 *忽略*。想像一下，如果不是用范围，我们有一个关键字列表，包含了原子 `:good` 或者 `:bad` 作为键，我们只想得到 `:good` 的平方值：
 
 ```iex
 iex> values = [good: 1, good: 2, bad: 3, good: 4]
@@ -36,7 +36,7 @@ iex> for {:good, n} <- values, do: n * n
 [1, 4, 16]
 ```
 
-Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can get filter out all the multiples of 3 and get the square of the remaining values only:
+除了模式匹配，过滤器还能用于过滤掉一些特定的值。例如，我们可以过滤掉所有 3 的倍数，只对其余的值求平方：
 
 ```iex
 iex> multiple_of_3? = fn(n) -> rem(n, 3) == 0 end
@@ -44,9 +44,9 @@ iex> for n <- 0..5, multiple_of_3?.(n), do: n * n
 [0, 9]
 ```
 
-Comprehensions filter out all elements for which the filter expression returns `false` or `nil`; all other values are kept.
+列表解析过滤掉所有在过滤器表达式中返回 `false` 或 `nil` 的元素；其余的会被保留下来。
 
-Comprehensions generally provide a much more concise representation than using the equivalent functions from the `Enum` and `Stream` modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and deletes all files in those directories:
+相比 `Enum` 和 `Stream` 模块中的函数，列表解析一般提供了简洁得多的表示。而且，列表解析还允许多个生成器和过滤器。这里有一个例子，遍历一个目录列表，并删除目录中所有文件：
 
 ```elixir
 for dir  <- dirs,
@@ -57,11 +57,11 @@ for dir  <- dirs,
 end
 ```
 
-Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.
+记住列表解析中的变量赋值，无论是在生成器中，还是在过滤器中或者是块中，都不影响列表解析外部的环境。
 
-## Bitstring generators
+## 二进制串生成器
 
-Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:
+二进制串生成器也是支持的，当你需要解析二进制串流的时候会非常有用。以下的例子，从一个二进制中接受遍历一个像素列表，把每个用红绿蓝三元色表示的值转换成一个包含三个元素的元组：
 
 ```iex
 iex> pixels = <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>>
@@ -69,29 +69,29 @@ iex> for <<r::8, g::8, b::8 <- pixels>>, do: {r, g, b}
 [{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]
 ```
 
-A bitstring generator can be mixed with the "regular" enumerable generators and provides filters as well.
+一个二进制串生成器可以与「一般的」可枚举类型生成器一起使用，也可以用过滤器。
 
-## Results other than lists
+## 返回除了列表之外的结果
 
-In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension.
+在上面的例子中，所有的列表解析都是返回列表作为结果。然而，给列表解析传一个 `:into` 选项，列表解析的结果可以被插入到不同的数据结构中。
 
-For example, a bitstring generator can be used with the `:into` option in order to easily remove all spaces in a string:
+例如，一个二进制串生成器可以通过 `:into` 选项，可以轻松地删除字符串中的所有空格：
 
 ```iex
 iex> for <<c <- " hello world ">>, c != ?\s, into: "", do: <<c>>
 "helloworld"
 ```
 
-Sets, maps and other dictionaries can also be given to the `:into` option. In general, `:into` accepts any structure that implements the `Collectable` protocol.
+集合， map 和其它字典类型也可以用 `:into` 选项。一般来说， `:into` 选项接受任意实现了 `Collectable` 协议的结构。
 
-A common use case of `:into` can be transforming values in a map, without touching the keys:
+`:into` 的一个常见的用法是不用通过键转换一个 map 中的值：
 
 ```iex
 iex> for {key, val} <- %{"a" => 1, "b" => 2}, into: %{}, do: {key, val * val}
 %{"a" => 1, "b" => 4}
 ```
 
-Let's make another example using streams. Since the `IO` module provides streams (that are both `Enumerable`s and `Collectable`s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:
+让我们看看另一个使用流的例子。因为 `IO` 模块提供了流式接口（它们既是 `Enumerable` 也是 `Collectable`），可以用列表解析实现一个 echo 终端，无论输入什么字符都显示成大写的版本：
 
 ```iex
 iex> stream = IO.stream(:stdio, :line)
@@ -100,4 +100,4 @@ iex> for line <- stream, into: stream do
 ...> end
 ```
 
-Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit `Ctrl+C` twice to get out of it. :)
+现在在这个终端里输入任意的字符串，你会看到以大写的值显示出来。不幸的是，这个例子中的列表解析会止住你的 IEx shell，你要按两次 `Ctrl+C` 才能退出。 :)

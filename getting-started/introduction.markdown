@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Introduction
+title: 介绍
 redirect_from: /getting_started/1.html
 ---
 
@@ -8,30 +8,28 @@ redirect_from: /getting_started/1.html
 
 {% include toc.html %}
 
-Welcome!
+欢迎！
 
-In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir's Interactive Shell, called IEx.
+在这个教程中我们将讲解关于 Elixir 的基础，该语言的语法，如何定义模块，如何处理常见的数据结构的特性，以及更多。本章的重点是确认 Elixir 正确安装，并且能够成功运行 Elixir 的交互式 shell，即 iex。
 
-Our requirements are:
+我们要求以下版本：
 
-  * Elixir - Version 1.0.0 onwards
-  * Erlang - Version 17.0 onwards
+  * Elixir - Version 1.0.0 或以上
+  * Erlang - Version 17.0 或以上
 
-Let's get started!
+我们开始吧！
 
-> If you find any errors in the tutorial or on the website, [please report a bug or send a pull request to our issue tracker](https://github.com/elixir-lang/elixir-lang.github.com).
+> 如果你在这个教程或者网站上发现了任何错误， [请提交错误报告或者在我们的 issue tracker 上发起一个 pull request](https://github.com/elixir-lang/elixir-lang.github.com) 。
 
-## Installation
+## 安装
 
-If you still haven't installed Elixir, run to our [installation page](/install.html). Once you are done, you can run `elixir -v` to get the current Elixir version.
+如果你还没安装 Elixir，请稳步到我们的 [安装页面](/install.html) 。一旦完成安装，你就能够通过执行 `elixir -v` 来查看当前的 Elixir 版本。
 
-## Interactive mode
+## 交互模式
 
-When you install Elixir, you will have three new executables: `iex`, `elixir` and `elixirc`. If you compiled Elixir from source or are using a packaged version, you can find these inside the `bin` directory.
+当安装 Elixir 的时候，你将会有三个新的可执行命令: `iex`，`elixir`，`elixirc`。如果你是从源代码编译 Elixir 或者通过预编译的包来安装，你会在 `bin` 目录中找到这些命令。
 
-For now, let's start by running `iex` (or `iex.bat` if you are on Windows) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let's warm up with some basic expressions.
-
-Open up `iex`  and type the following expressions:
+现在，我们从运行 `iex` 开始（或者假如你是在 Windows 上，运行 `iex.bat`），它是交互式 Elixir （Interactive Elixir）的缩写。在交互模式下，我们能输入任意的 Elixir 表达式并获得它的结果。我们通过一些基本的表达式来热热身吧：
 
 ```iex
 Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
@@ -42,13 +40,13 @@ iex> "hello" <> " world"
 "hello world"
 ```
 
-It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.
+看起来我们已经就绪了！从下一章节开始，我们将在接下来的章节中大量使用交互式 shell，来帮助我们熟悉语言结构和基本类型。
 
-> Note: if you are on Windows, you can also try `iex --werl` which may provide a better experience depending on which console you are using.
+> 注意：如果你是在 Windows 上，你也可以试试 `iex --werl`，它可以根据你所使用的控制台提供一个更好的体验。
 
-## Running scripts
+## 运行脚本
 
-After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting Elixir code into a file and executing it with `elixir`:
+在熟悉了语言的基础之后，你可能会想尝试写一些简单的程序。可以把 Elixir 代码放在一个文件中，然后用 `elixir` 来执行它：
 
 ```bash
 $ cat simple.exs
@@ -59,5 +57,4 @@ $ elixir simple.exs
 Hello world
 from Elixir
 ```
-
-Later on we will learn how to compile Elixir code (in [Chapter 8](/getting-started/modules.html)) and how to use the Mix build tool (in the [Mix & OTP guide](/getting-started/mix-otp/introduction-to-mix.html)). For now, let's move on to [Chapter 2](/getting-started/basic-types.html).
+稍后我们将会学到如何编译 Elixir 代码（在 [第 8 章](/getting-started/modules.html) 中）以及如何使用 Mix 构建工具（在 [Mix & OTP 指南](/getting-started/mix-otp/introduction-to-mix.html) 中）。现在，让我们继续 [第 2 章](/getting-started/basic-types.html) 。

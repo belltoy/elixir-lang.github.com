@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Binaries, strings and char lists
+title: 二进制，字符串和字符列表
 redirect_from: /getting_started/6.html
 ---
 
@@ -8,7 +8,7 @@ redirect_from: /getting_started/6.html
 
 {% include toc.html %}
 
-In "Basic types", we learned about strings and used the `is_binary/1` function for checks:
+在「基本类型」中，我们已经学习了关于字符串和使用 `is_binary/1` 函数来检查字符串：
 
 ```iex
 iex> string = "hello"
@@ -17,17 +17,17 @@ iex> is_binary string
 true
 ```
 
-In this chapter, we will understand what binaries are, how they associate with strings, and what a single-quoted value, `'like this'`, means in Elixir.
+本章中，我们将理解什么是二进制（binary），如何与字符串联系起来，以及在 Elixir 中一个例如 `'like this'` 这样的单引号值是什么意思。
 
-## UTF-8 and Unicode
+## UTF-8 和 Unicode
 
-A string is a UTF-8 encoded binary. In order to understand exactly what we mean by that, we need to understand the difference between bytes and code points.
+字符串是用 UTF-8 编码的二进制。为了确切理解我们这句话，我们需要先理解字节和码点 （code points） 之间的不同。
 
-The Unicode standard assigns code points to many of the characters we know. For example, the letter `a` has code point `97` while the letter `ł` has code point `322`. When writing the string `"hełło"` to disk, we need to convert this code point to bytes. If we adopted a rule that said one byte represents one code point, we wouldn't be able to write `"hełło"`, because it uses the code point `322` for `ł`, and one byte can only represent a number from `0` to `255`. But of course, given you can actually read `"hełło"` on your screen, it must be represented *somehow*. That's where encodings come in.
+Unicode 标准给很多我们熟知的字符都赋于一个码点（code point）。例如，字母 `a` 的码点是 `97`，字母 `ł` 的码点是 `322`。当把字符串 `"hełło"` 写入磁盘的时候，我们必须把码点转换成字节。我们假定一个规则，用一个字节代表一个码点，我们就不可能写 `"hełło"` 了，因为 `ł` 的码点是 `322` 而一个字节只能表示一个从 `0` 到 `255` 的数字。但是当然了，既然我们可以从屏幕上看到 `"hełło"`，它就必须以 **某种** 方式表示。这种方式就是所谓的编码。
 
-When representing code points in bytes, we need to encode them somehow. Elixir chose the UTF-8 encoding as its main and default encoding. When we say a string is a UTF-8 encoded binary, we mean a string is a bunch of bytes organized in a way to represent certain code points, as specified by the UTF-8 encoding.
+当用字节表示码点的时候，我们需要用某种方式编码。 Elixir 选择用 UTF-8 编码作为它的主要的也是默认的编码方式。当我们说一个字符串是一个 UTF-8 编码的二进制，我们的意思是一个字符串是一堆以 UTF-8 的编码方式来表示码点的字节。
 
-Since we have code points like `ł` assigned to the number `322`, we actually need more than one byte to represent it. That's why we see a difference when we calculate the `byte_size/1` of a string compared to its `String.length/1`:
+因为我们有像 `ł` 这样的字符，它的码点是 `322`，我们实际上需要用一个以上的字节来表示。这就是为什么当我们对一个字符串计算 `byte_size/1` 和 `String.length/1` 的时候会有不同的结果。
 
 ```iex
 iex> string = "hełło"
@@ -38,9 +38,9 @@ iex> String.length string
 5
 ```
 
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering iex.
+> 注意： 如果你是在 Windows 上，你的终端有可能默认不是使用 UTF-8 。你可以在进入 iex 之前通过运行 `chcp 65001` 来修改当前会话的编码。
 
-UTF-8 requires one byte to represent the code points `h`, `e` and `o`, but two bytes to represent `ł`. In Elixir, you can get a code point's value by using `?`:
+UTF-8 中要求用一个字节表示 `h`, `e` 和 `o` 这样的码点，用两个字节表示 `ł` 。 在 Elixir 中，你可以用 `?` 来获得码点：
 
 ```iex
 iex> ?a
@@ -49,20 +49,20 @@ iex> ?ł
 322
 ```
 
-You can also use the functions in [the `String` module](/docs/stable/elixir/#!String.html) to split a string in its code points:
+你也可以使用在 [`String` 模块](/docs/stable/elixir/#!String.html) 中的函数把一个字符串按照码点切分：
 
 ```iex
 iex> String.codepoints("hełło")
 ["h", "e", "ł", "ł", "o"]
 ```
 
-You will see that Elixir has excellent support for working with strings. It also supports many of the Unicode operations. In fact, Elixir passes all the tests showcased in the article ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/).
+你会看到 Elixir 对字符串的支持非常好。它也支持许多 Unicode 操作。事实上， Elixir 通过了 ["The string type is broken"](http://mortoray.com/2013/11/27/the-string-type-is-broken/) 这篇文章中的所有测试用例。
 
-However, strings are just part of the story. If a string is a binary, and we have used the `is_binary/1` function, Elixir must have an underlying type empowering strings. And it does. Let's talk about binaries!
+然而，字符串只是故事的一部分。如果一个字符串是二进制，而我们使用 `is_binary/1` 函数， Elixir 就必须有一个底层类型来支持字符串。就是这样。让我们来谈谈二进制吧！
 
-## Binaries (and bitstrings)
+## 二进制（和二进制串）
 
-In Elixir, you can define a binary using `<<>>`:
+在 Elixir 中，你可以用 `<<>>` 来定义一个二进制（binary）：
 
 ```iex
 iex> <<0, 1, 2, 3>>
@@ -71,28 +71,28 @@ iex> byte_size <<0, 1, 2, 3>>
 4
 ```
 
-A binary is just a sequence of bytes. Of course, those bytes can be organized in any way, even in a sequence that does not make them a valid string:
+一个二进制只是一个字节序列。当然，那些序列可以以任意的方式来组织，即使用一个不能使它能够表示成一个有效的字符串的方式：
 
 ```iex
 iex> String.valid?(<<239, 191, 191>>)
 false
 ```
 
-The string concatenation operation is actually a binary concatenation operator:
+字符串连接操作实际上是一个二进制连接操作：
 
 ```iex
 iex> <<0, 1>> <> <<2, 3>>
 <<0, 1, 2, 3>>
 ```
 
-A common trick in Elixir is to concatenate the null byte `<<0>>` to a string to see its inner binary representation:
+Elixir 中的一个常见技巧是将空字节 `<<0>>` 连接到一个字符串后面来查看这个字符串的二进制表示：
 
 ```iex
 iex> "hełło" <> <<0>>
 <<104, 101, 197, 130, 197, 130, 111, 0>>
 ```
 
-Each number given to a binary is meant to represent a byte and therefore must go up to 255. Binaries allow modifiers to be given to store numbers bigger than 255 or to convert a code point to its utf8 representation:
+二进制中的每个数字都表示一个字节，所以最大是 255 。二进制允许通过修饰符来表示大于 255 的数字，或者用码点转化成它的 UTF-8 表示：
 
 ```iex
 iex> <<255>>
@@ -107,7 +107,7 @@ iex> <<256 :: utf8, 0>>
 <<196, 128, 0>>
 ```
 
-If a byte has 8 bits, what happens if we pass a size of 1 bit?
+如果一个字节有 8 位，我们设成 1 位会怎么样？
 
 ```iex
 iex> <<1 :: size(1)>>
@@ -122,7 +122,7 @@ iex> bit_size(<< 1 :: size(1)>>)
 1
 ```
 
-The value is no longer a binary, but a bitstring -- just a bunch of bits! So a binary is a bitstring where the number of bits is divisible by 8!
+这个值不再是一个二进制，而是一个二进制串 （bitstring） ———— 只是一堆比特位！所以一个二进制是一个位数刚好可以被 8 整除的二进制串！
 
 We can also pattern match on binaries / bitstrings:
 
@@ -135,7 +135,7 @@ iex> <<0, 1, x>> = <<0, 1, 2, 3>>
 ** (MatchError) no match of right hand side value: <<0, 1, 2, 3>>
 ```
 
-Note each entry in the binary is expected to match exactly 8 bits. However, we can match on the rest of the binary modifier:
+注意二进制中的每个部分都要求匹配 8 位。然而，我们可以用二进制修饰符匹配剩下的：
 
 ```iex
 iex> <<0, 1, x :: binary>> = <<0, 1, 2, 3>>
@@ -144,7 +144,7 @@ iex> x
 <<2, 3>>
 ```
 
-The pattern above only works if the binary is at the end of `<<>>`. Similar results can be achieved with the string concatenation operator `<>`:
+以上的模式只有当二进制在 `<<>>` 末尾的时候才有效。在字符串连接操作符 `<>` 上也能得到类似的结果：
 
 ```iex
 iex> "he" <> rest = "hello"
@@ -153,11 +153,11 @@ iex> rest
 "llo"
 ```
 
-This finishes our tour of bitstrings, binaries and strings. A string is a UTF-8 encoded binary, and a binary is a bitstring where the number of bits is divisible by 8. Although this shows the flexibility Elixir provides to work with bits and bytes, 99% of the time you will be working with binaries and using the `is_binary/1` and `byte_size/1` functions.
+二进制串，二进制和字符串就讲解到此。一个字符串是一个用 UTF-8 编码的二进制，而一个二进制是一个位数刚好可以被 8 整除的二进制串。尽管这体现了 Elixir 在处理位和字节上的灵活性，但我们在 99% 的时候只会乃至二进制以及 `is_binary/1` 和 `byte_size/1` 函数。
 
-## Char lists
+## 字符列表
 
-A char list is nothing more than a list of characters:
+一个字符列表只不过仅仅是一个一系列字符的列表：
 
 ```iex
 iex> 'hełło'
@@ -168,9 +168,9 @@ iex> 'hello'
 'hello'
 ```
 
-You can see that, instead of containing bytes, a char list contains the code points of the characters between single-quotes (note that iex will only output code points if any of the chars is outside the ASCII range). So while double-quotes represent a string (i.e. a binary), single-quotes represents a char list (i.e. a list).
+你可以看到，一个字符列表包含了这些位于单引号之间的字符的码点（注意 iex 只会将 ASCII 范围之外的字节用码点打印出来），而不是包含字节。所以双引号表示一个字符串 （即一个二进制），单引号表示一个字符列表（即一个列表）。
 
-In practice, char lists are used mostly when interfacing with Erlang, in particular old libraries that do not accept binaries as arguments. You can convert a char list to a string and back by using the `to_string/1` and `to_char_list/1` functions:
+在实践中，字符列表多用于与 Erlang 对接的时候，尤其是那些不接受二进制作为参数的老库。你可以用 `to_string/1` 和 `to_char_list/1` 函数在字符列表和字符串之间转换：
 
 ```iex
 iex> to_char_list "hełło"
@@ -183,6 +183,6 @@ iex> to_string 1
 "1"
 ```
 
-Note that those functions are polymorphic. They not only convert char lists to strings, but also integers to strings, atoms to strings, and so on.
+注意那些函数是多态的。它们不仅仅只转换字符列表到字符串，也能转换整数、原子以及其它类型到字符串。
 
-With binaries, strings, and char lists out of the way, it is time to talk about key-value data structures.
+把二进制，字符串和字符列表放一边，是时候来说说关于 key-value 数据类型了。

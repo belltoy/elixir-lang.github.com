@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Where to go next
+title: 接下来
 redirect_from: /getting_started/21.html
 ---
 
@@ -8,38 +8,38 @@ redirect_from: /getting_started/21.html
 
 {% include toc.html %}
 
-Eager to learn more? Keep reading!
+渴望了解更多？请继续阅读！
 
-## Build your first Elixir project
+## 创建你的第一个 Elixir 项目
 
-In order to get your first project started, Elixir ships with a build tool called Mix. You can get your new project started by simply running:
+为了开始你的第一个项目， Elixir 提供了一个构建工具 Mix 。你可以通过简单地执行下面的命令开始一个新的项目：
 
     mix new path/to/new/project
 
-We have written a guide that covers how to build an Elixir application, with its own supervision tree, configuration, tests and more. The application works as a distributed key-value store where we organize key-value pairs into buckets and distribute those buckets across multiple nodes:
+我们已经编写了一个指南，涵盖了如何构建一个 Elixir 应用，包含自己的监控树，配置，测试等等。 应用是一个以分布式 key-value 存储，我们将 key-value 对组织在 bucket 中，这些 buckets 的分布跨越了多个节点：
 
-* [Mix and OTP](/getting-started/mix-otp/introduction-to-mix.html)
+* [Mix 和 OTP](/getting-started/mix-otp/introduction-to-mix.html)
 
-## Meta-programming
+## 元编译
 
-Elixir is an extensible and very customizable programming language thanks to its meta-programming support. Most meta-programming in Elixir is done through macros, which are very useful in several situations, especially for writing DSLs. We have written a short guide that explains the basic mechanisms behind macros and shows how to write macros and use them to create DSLs:
+由于 Elixir 对元编程的支持，使得它成为一个可扩展的，可定制的编程语言。 Elixir 中的大部分元编程是通过宏完成的，在一些情况下非常有用，尤其是针对编写领域特定语言（ DSL）。我们写了一个简短的教程，解释宏背后的基本机制，并展示了如何编写宏和使用它们创建领域特定语言：
 
-* [Meta-programming in Elixir](/getting-started/meta/quote-and-unquote.html)
+* [Elixir 中的元编程](/getting-started/meta/quote-and-unquote.html)
 
-## Community and other resources
+## 社区和其它资源
 
-We have a [Learning](/learning.html) section that explores books, screencasts and other resources for learning Elixir and explore the ecosystem. There are also plenty of Elixir resources out there, like conference talks, open source projects, and other learning material produced by the community.
+我们有一篇 [学习资源](/learning.html) 介绍了关于学习 Elixir 的书，教学视频和其它资源，介绍了它的生态系统。此外，还有大量的 Elixir 资源，像是会议演讲，开源项目，以及社区制作的其它学习材料。
 
-Remember that in case of any difficulties, you can always visit the **#elixir-lang** channel on **irc.freenode.net** or send a message to the [mailing list](http://groups.google.com/group/elixir-lang-talk). You can be sure that there will be someone willing to help. To keep posted on the latest news and announcements, follow the [blog](/blog/) and follow the language development on the [elixir-core mailing list](http://groups.google.com/group/elixir-lang-core).
+记住假如有任何困难，你都可以访问 **irc.freenode.net** 上的 **#elixir-lang** 频道或者发送一封邮件到 [邮件列表](http://groups.google.com/group/elixir-lang-talk) 。你可以放心肯定会有人愿意提供帮助。要及时地了解最新的新闻和公告，请关注 [官方博客](http://elixir-lang.org/blog/) 和 [elixir-core 邮件列表] 上的语言发展。
 
-Don't forget that you can also check the [source code of Elixir itself](https://github.com/elixir-lang/elixir), which is mostly written in Elixir (mainly the `lib` directory), or [explore Elixir's documentation](/docs.html).
+别忘了你也可以直接查看 [Elixir 源代码](https://github.com/elixir-lang/elixir) ，大部分源代码都是用 Elixir （主要是在 `lib` 目录下） 编写的，或者访问 [Elixir 文档](/docs.html) 。
 
-## A byte of Erlang
+## Erlang 简明教程
 
-Elixir runs on the Erlang Virtual Machine and, sooner or later, an Elixir developer will want to interface with existing Erlang libraries. Here's a list of online resources that cover Erlang's fundamentals and its more advanced features:
+Elixir 运行在 Erlang 虚拟机上，而且 Elixir 开发都迟早都会与 Elixir 现有的库对接。下面是一份涵盖了 Erlang 基础和高级特性的在线资源列表：
 
-* This [Erlang Syntax: A Crash Course](/crash-course.html) provides a concise intro to Erlang's syntax. Each code snippet is accompanied by equivalent code in Elixir. This is an opportunity for you to not only get some exposure to Erlang's syntax but also review some of the things you have learned in this guide.
+* 这篇 [Erlang 语法：速成课](/crash-course.html) 提供了一份 Erlang 语法的简明介绍。每一份代码片断都有一分相应的 Elixir 代码对照。 这对于你来说是一个学习机会，不仅可以接触到 Erlang 的语法，还能够复习一些你已经在本教程中学到的东西。
 
-* Erlang's official website has a short [tutorial](http://www.erlang.org/course/concurrent_programming.html) with pictures that briefly describe Erlang's primitives for concurrent programming.
+* Erlang 的官方网站上有一份带有图片的 [教程](http://www.erlang.org/course/concurrent_programming.html) ，它简单描述了 Erlang 中的并发编程原语。
 
-* [Learn You Some Erlang for Great Good!](http://learnyousomeerlang.com/) is an excellent introduction to Erlang, its design principles, standard library, best practices and much more. Once you have read through the crash course mentioned above, you'll be able to safely skip the first couple of chapters in the book that mostly deal with the syntax. When you reach [The Hitchhiker's Guide to Concurrency](http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency) chapter, that's where the real fun starts.
+* [Learn You Some Erlang for Great Good!](http://learnyousomeerlang.com/) 《学些 Erlang 挺好！》 一书对 Erlang 作了非常棒的介绍， 包括它的设计原则、标准库、最佳实践以及更多。 一旦你阅读过上面提到的速成课程，你可以放心地跳过这本书前面有关语法的几章。 当你读到 [The Hitchhiker's Guide to Concurrency](http://learnyousomeerlang.com/the-hitchhikers-guide-to-concurrency) 《并发漫游指南》这一章的时候，真正乐趣才开始。

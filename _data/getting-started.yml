@@ -1,74 +1,74 @@
-- title: Getting Started
+- title: 入门
   dir: /getting-started/
   pages:
-    - title: Introduction
+    - title: 介绍
       slug: introduction
 
-    - title: Basic types
+    - title: 基本类型
       slug: basic-types
 
-    - title: Basic operators
+    - title: 基本操作符
       slug: basic-operators
 
-    - title: Pattern matching
+    - title: 模式匹配
       slug: pattern-matching
 
-    - title: case, cond and if
+    - title: case, cond 和 if
       slug: case-cond-and-if
 
-    - title: Binaries, strings and char lists
+    - title: 二进制，字符串和字符列表
       slug: binaries-strings-and-char-lists
 
-    - title: Keywords, maps and dicts
+    - title: 关键字，map 和字典
       slug: maps-and-dicts
 
-    - title: Modules
+    - title: 模块
       slug: modules
 
-    - title: Recursion
+    - title: 递归
       slug: recursion
 
-    - title: Enumerables and streams
+    - title: 可枚举类型和流
       slug: enumerables-and-streams
 
-    - title: Processes
+    - title: 进程
       slug: processes
 
-    - title: IO and the file system
+    - title: IO 和文件系统
       slug: io-and-the-file-system
 
-    - title: alias, require and import
+    - title: alias, require 和 import
       slug: alias-require-and-import
 
-    - title: Module attributes
+    - title: 模块属性
       slug: module-attributes
 
     - title: Structs
       slug: structs
 
-    - title: Protocols
+    - title: 协议
       slug: protocols
 
-    - title: Comprehensions
+    - title: 列表解析
       slug: comprehensions
 
     - title: Sigils
       slug: sigils
 
-    - title: try, catch and rescue
+    - title: try, catch 和 rescue
       slug: try-catch-and-rescue
 
-    - title: Typespecs and behaviours
+    - title: Typespecs 和 behaviours
       slug: typespecs-and-behaviours
 
-    - title: Where to go next
+    - title: 接下来
       slug: where-to-go-next
 
 
-- title: Mix and OTP
+- title: Mix 和 OTP
   dir: /getting-started/mix-otp/
   pages:
-    - title: Introduction to Mix
+    - title: 介绍 Mix
       slug: introduction-to-mix
 
     - title: Agent
@@ -80,33 +80,33 @@
     - title: GenEvent
       slug: genevent
 
-    - title: Supervisor and Application
+    - title: Supervisor 和 Application
       slug: supervisor-and-application
 
     - title: ETS
       slug: ets
 
-    - title: Dependencies and umbrella apps
+    - title: 依赖和 umbrella apps
       slug: dependencies-and-umbrella-apps
 
-    - title: Task and gen-tcp
+    - title: Task 和 gen_tcp
       slug: task-and-gen-tcp
 
-    - title: Docs, tests and pipelines
+    - title: 文档, 测试和管道
       slug: docs-tests-and-pipelines
 
-    - title: Distributed tasks and configuration
+    - title: 分布式任务和配置
       slug: distributed-tasks-and-configuration
 
 
-- title: Meta-programming in Elixir
+- title: Elixir 中的元编程
   dir: /getting-started/meta/
   pages:
-    - title: Quote and unquote
+    - title: 引用（quote）和去引用（unquote）
       slug: quote-and-unquote
 
-    - title: Macros
+    - title: 宏
       slug: macros
 
-    - title: Domain Specific Languages
+    - title: 领域特定语言
       slug: domain-specific-languages

@@ -105,7 +105,7 @@ Note that we are using a HashDict to store our state instead of a `Map`, because
 Now that the `KV.Bucket` module has been defined, our test should pass! You can try it yourself by running: `mix test` .
 
 
-## ExUnit callbacks
+## ExUnit 回调
 
 Before moving on and adding more features to `KV.Bucket`, let's talk about ExUnit callbacks. As you may expect, all `KV.Bucket` tests will require a bucket to be started during setup and stopped after the test. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.
 

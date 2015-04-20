@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Basic operators
+title: 基本操作符
 redirect_from: /getting_started/3.html
 ---
 
@@ -8,9 +8,9 @@ redirect_from: /getting_started/3.html
 
 {% include toc.html %}
 
-In the [previous chapter](/getting-started/basic-types.html), we saw Elixir provides `+`, `-`, `*`, `/` as arithmetic operators, plus the functions `div/2` and `rem/2` for integer division and remainder.
+在 [上一章](/getting-started/basic-types.html) 中，我们看到 Elixir 提供了 `+`， `-`， `*`， `/` 作为数学运算符，加上函数 `div/2` 和 `rem/2` 作整数除法和余数运算。
 
-Elixir also provides `++` and `--` to manipulate lists:
+Elixir 也提供了 `++` 和 `--` 来操作列表：
 
 ```iex
 iex> [1,2,3] ++ [4,5,6]
@@ -19,14 +19,14 @@ iex> [1,2,3] -- [2]
 [1,3]
 ```
 
-String concatenation is done with `<>`:
+字符串连接操作用 `<>`：
 
 ```iex
 iex> "foo" <> "bar"
 "foobar"
 ```
 
-Elixir also provides three boolean operators: `or`, `and` and `not`. These operators are strict in the sense that they expect a boolean (`true` or `false`) as their first argument:
+Elixir 也提供了三个布尔操作符： `or`， `and` 和 `not`。这些操作符严格限定了它们的第一个参数必须是布尔值（`true` 或者 `false`）：
 
 ```iex
 iex> true and true
@@ -35,14 +35,14 @@ iex> false or is_atom(:example)
 true
 ```
 
-Providing a non-boolean will raise an exception:
+提供一个非布尔值会引发一个异常：
 
 ```iex
 iex> 1 and true
 ** (ArgumentError) argument error
 ```
 
-`or` and `and` are short-circuit operators. They only execute the right side if the left side is not enough to determine the result:
+`or` 和 `and` 是短路操作符。它们只有当左侧的表达式不满足条件时才会执行右边的表达式：
 
 ```iex
 iex> false and error("This error will never be raised")
@@ -52,9 +52,9 @@ iex> true or error("This error will never be raised")
 true
 ```
 
-> Note: If you are an Erlang developer, `and` and `or` in Elixir actually map to the `andalso` and `orelse` operators in Erlang.
+> 注意： 如果你是一个 Erlang 开发者， Elixir 中的 `and` 和 `or` 实际上是对应 Erlang 中的 `andalso` 和 `orelse` 操作符。
 
-Besides these boolean operators, Elixir also provides `||`, `&&` and `!` which accept arguments of any type. For these operators, all values except `false` and `nil` will evaluate to true:
+除了这些布尔操作符， Elixir 还提供了 `||`， `&&` 和 `!`，它们接受任意类型的值作为参数。对于这些操作符，除了 `false` 和 `nil` 之外的所有值都为真：
 
 ```iex
 # or
@@ -78,9 +78,9 @@ iex> !nil
 true
 ```
 
-As a rule of thumb, use `and`, `or` and `not` when you are expecting booleans. If any of the arguments are non-boolean, use `&&`, `||` and `!`.
+一般来说，当你预期是布尔值的时候，使用 `and`， `or` 和 `not`。 如果任意一个参数是非布尔值，就用 `&&`， `||` 和 `!`。
 
-Elixir also provides `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` and `>` as comparison operators:
+Elixir 也提供了 `==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` 和 `>` 作为比较操作符：
 
 ```iex
 iex> 1 == 1
@@ -91,7 +91,7 @@ iex> 1 < 2
 true
 ```
 
-The difference between `==` and `===` is that the latter is more strict when comparing integers and floats:
+`==` 和 `===` 的区别在于当比较整数和浮点数的时候后者更加严格：
 
 ```iex
 iex> 1 == 1.0
@@ -100,17 +100,17 @@ iex> 1 === 1.0
 false
 ```
 
-In Elixir, we can compare two different data types:
+在 Elixir 中，我们能够比较两个不同数据类型的值：
 
 ```iex
 iex> 1 < :atom
 true
 ```
 
-The reason we can compare different data types is pragmatism. Sorting algorithms don't need to worry about different data types in order to sort. The overall sorting order is defined below:
+我们能够比较不同类型的原因是实用主义。排序算法在排序的时候不需要担心不同的数据类型。整体排序顺序定义如下：
 
     number < atom < reference < functions < port < pid < tuple < maps < list < bitstring
 
-You don't actually need to memorize this ordering, but it is important just to know an order exists.
+实际上你不需要去记住这些顺序，更重要的是知道这么一个顺序的存在。
 
-Well, that is it for the introduction. In the next chapter, we are going to discuss some basic functions, data type conversions and a bit of control-flow.
+好了，介绍到此为止。在下一章中，我们将会讨论一些基本函数，数据类型转换和一些流程控制。

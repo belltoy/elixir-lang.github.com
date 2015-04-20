@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Modules
+title: 模块
 redirect_from: /getting_started/8.html
 ---
 
@@ -8,14 +8,14 @@ redirect_from: /getting_started/8.html
 
 {% include toc.html %}
 
-In Elixir we group several functions into modules. We've already used many different modules in the previous chapters such as [the `String` module](/docs/stable/elixir/#!String.html):
+在 Elixir 里我们会把一些函数组合到一个模块中。我们在之前的章节中已经用过许多模块，例如 [字符串模块](/docs/stable/elixir/#!String.html) ：
 
 ```iex
 iex> String.length "hello"
 5
 ```
 
-In order to create our own modules in Elixir, we use the `defmodule` macro. We use the `def` macro to define functions in that module:
+要在 Elixir 中创建我们自己的模块，我们需要用到 `defmodule` 宏。我们用 `def` 宏在模块中定义函数：
 
 ```iex
 iex> defmodule Math do
@@ -28,11 +28,11 @@ iex> Math.sum(1, 2)
 3
 ```
 
-In the following sections, our examples are going to get a bit more complex, and it can be tricky to type them all in the shell. It's about time for us to learn how to compile Elixir code and also how to run Elixir scripts.
+在接下来的段落中，我们的例子将会变得更加复杂，很难在 shell 中完整地输入。是时候让我们来学习如何编译 Elixir 代码和如何运行 Elixir 脚本了。
 
-## Compilation
+## 编译
 
-Most of the time it is convenient to write modules into files so they can be compiled and reused. Let's assume we have a file named `math.ex` with the following contents:
+大多数时候将模块写入文件会更方便，这样就可以编译和重用它们了。假设我们有一个名为 `math.ex` 的文件，内容如下：
 
 ```elixir
 defmodule Math do
@@ -42,30 +42,30 @@ defmodule Math do
 end
 ```
 
-This file can be compiled using `elixirc`:
+这个文件可以用 `elixirc` 来编译：
 
 ```bash
 $ elixirc math.ex
 ```
 
-This will generate a file named `Elixir.Math.beam` containing the bytecode for the defined module. If we start `iex` again, our module definition will be available (provided that `iex` is started in the same directory the bytecode file is in):
+这会生成一个模块对应的字节码文件 `Elixir.Math.beam` 。如果我们再运行 `iex`，我们定义的模块就可以用了（假设 `iex` 是在字节码文件相同的目录中启动的）：
 
 ```iex
 iex> Math.sum(1, 2)
 3
 ```
 
-Elixir projects are usually organized into three directories:
+Elixir 项目通常被组织在三个目录中：
 
-* ebin - contains the compiled bytecode
-* lib - contains elixir code (usually `.ex` files)
-* test - contains tests (usually `.exs` files)
+* ebin - 包含编译后的字节码文件
+* lib - 包含 elixir 代码 （通常是 `.ex` 文件）
+* test - 包含测试 （通常是 `.exs` 文件）
 
-When working on actual projects, the build tool called `mix` will be responsible for compiling and setting up the proper paths for you. For learning purposes, Elixir also supports a scripted mode which is more flexible and does not generate any compiled artifacts.
+在实际项目中，名用 `mix` 的构建工具会用来负责编译和为你设置路径。为了学习的目的， Elixir 还提供了一个更灵活的脚本模式，而且不会生成任何的编译产物。
 
-## Scripted mode
+## 脚本模式
 
-In addition to the Elixir file extension `.ex`, Elixir also supports `.exs` files for scripting. Elixir treats both files exactly the same way, the only difference is in intention. `.ex` files are meant to be compiled while `.exs` files are used for scripting, without the need for compilation. For instance, we can create a file called `math.exs`:
+除了 Elixir 的文件扩展名 `.ex`， Elixir 还支持 `.exs` 文件作为脚本。 Elixir 对两种文件一视同仁，唯一的区别在于其目的。 `.ex` 文件是会被编译，而 `.exs` 文件用作脚本而无需编译。举例来说，我们可以创建一个文件 `math.exs`：
 
 ```elixir
 defmodule Math do
@@ -83,11 +83,11 @@ And execute it as:
 $ elixir math.exs
 ```
 
-The file will be compiled in memory and executed, printing "3" as the result. No bytecode file will be created. In the following examples, we recommend you write your code into script files and execute them as shown above.
+这个文件会被在内存中编译并执行，打印出结果 「3」。 不会生成没有字节码文件。 在接下来的例子中，我们推荐你把代码写入脚本文件中并按照上述的方式执行。
 
-## Named functions
+## 命名的函数
 
-Inside a module, we can define functions with `def/2` and private functions with `defp/2`. A function defined with `def/2` can be invoked from other modules while a private function can only be invoked locally.
+在一个模块中，我们可以用 `def/2` 定义函数，用 `defp/2` 定义私有函数。用 `def/2` 定义的函数可以被其它模块调用，而私有函数只能在自身模块内部调用。
 
 ```elixir
 defmodule Math do
@@ -104,7 +104,7 @@ Math.sum(1, 2)    #=> 3
 Math.do_sum(1, 2) #=> ** (UndefinedFunctionError)
 ```
 
-Function declarations also support guards and multiple clauses. If a function has several clauses, Elixir will try each clause until it finds one that matches. Here is an implementation of a function that checks if the given number is zero or not:
+函数定义还支持守卫语句（guard）和多分句（clause）。如果一个函数有多个分句， Elixir 会尝试每个分句直到找到匹配的那个。这是一个检查给定的数字是否是零的函数实现：
 
 ```elixir
 defmodule Math do
@@ -124,11 +124,11 @@ Math.zero?([1,2,3])
 #=> ** (FunctionClauseError)
 ```
 
-Giving an argument that does not match any of the clauses raises an error.
+给出一个不匹配任何分句的参数会引发一个错误。
 
-## Function capturing
+## 函数捕获 (Function capturing)
 
-Throughout this tutorial, we have been using the notation `name/arity` to refer to functions. It happens that this notation can actually be used to retrieve a named function as a function type. Let's start `iex` and run the `math.exs` file defined above:
+在这个教程中，我们一直会用记号 `name/arity` 来引用函数。恰好这种记法实际上也可以用来获取一个命名函数作为一个函数类型。我们打开 `iex` 并运行上面定义的 `math.exs` 文件：
 
 ```bash
 $ iex math.exs
@@ -145,7 +145,7 @@ iex> fun.(0)
 true
 ````
 
-Local or imported functions, like `is_function/1`, can be captured without the module:
+本地函数或引入的函数，如 `is_function/1`，可以被捕获而不用写模块名：
 
 ```iex
 iex> &is_function/1
@@ -154,7 +154,7 @@ iex> (&is_function/1).(fun)
 true
 ```
 
-Note the capture syntax can also be used as a shortcut for creating functions:
+注意捕获语法也可以用作创建函数的快捷方式：
 
 ```iex
 iex> fun = &(&1 + 1)
@@ -163,9 +163,9 @@ iex> fun.(1)
 2
 ```
 
-The `&1` represents the first argument passed into the function. `&(&1+1)` above is exactly the same as `fn x -> x + 1 end`. The syntax above is useful for short function definitions.
+`&1` 相当于传入函数的第一个参数。 上面的 `&(&1+1)` 等价于 `fn x -> x + 1 end` 。 上面的语法在定义短函数的时候很有用。
 
-In the same fashion if you want to call a function from a module, you can do `&Module.function()`:
+同样地，如果你想调用一个模块中的函数，你可以这样写 `&Module.function()` ：
 
 ```iex
 iex> fun = &List.flatten(&1, &2)
@@ -173,12 +173,11 @@ iex> fun = &List.flatten(&1, &2)
 iex> fun.([1, [[2], 3]], [4, 5])
 [1, 2, 3, 4, 5]
 ```
+`&List.flatten(&1, &2)` 相当于这种写法 `fn(list, tail) -> List.flatten(list, tail) end` 。 你可以在 [`Kernel.SpecialForms` 文档](/docs/stable/elixir/#!Kernel.SpecialForms.html#&/1) 中了解更多关于捕获操作符。
 
-`&List.flatten(&1, &2)` is the same as writing `fn(list, tail) -> List.flatten(list, tail) end`. You can read more about the capture operator `&` in [the `Kernel.SpecialForms` documentation](/docs/stable/elixir/#!Kernel.SpecialForms.html#&/1).
+## 默认参数
 
-## Default arguments
-
-Named functions in Elixir also support default arguments:
+Elixir 中的命名函数还支持默认参数：
 
 ```elixir
 defmodule Concat do
@@ -191,7 +190,7 @@ IO.puts Concat.join("Hello", "world")      #=> Hello world
 IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 ```
 
-Any expression is allowed to serve as a default value, but it won't be evaluated during the function definition; it will simply be stored for later use. Every time the function is invoked and any of its default values have to be used, the expression for that default value will be evaluated:
+任何表达式都可以作为一个默认值，但不会在函数定义的时候执行；它会被简单地保存起来，以备之后使用。每次函数被调用的时候，所有的默认值都会被用到，默认参数的表达式会被执行：
 
 ```elixir
 defmodule DefaultTest do
@@ -212,7 +211,7 @@ hello
 :ok
 ```
 
-If a function with default values has multiple clauses, it is recommended to create a function head (without an actual body), just for declaring defaults:
+如果一个带有默认参数的函数有多个分句，建议创建一个函数头 （不带实际的函数体），用于声明默认参数：
 
 ```elixir
 defmodule Concat do
@@ -232,7 +231,7 @@ IO.puts Concat.join("Hello", "world", "_") #=> Hello_world
 IO.puts Concat.join("Hello")               #=> Hello
 ```
 
-When using default values, one must be careful to avoid overlapping function definitions. Consider the following example:
+当用到默认值的时候，一个必须小心的地方是要避免覆盖函数定义。 考虑下面的例子：
 
 ```elixir
 defmodule Concat do
@@ -248,11 +247,11 @@ defmodule Concat do
 end
 ```
 
-If we save the code above in a file named "concat.ex" and compile it, Elixir will emit the following warning:
+如果我们将上面的代码保存在一个名为 「concat.ex」的文件中，并编译它， Elixir 会发出下面的警告：
 
     concat.ex:7: this clause cannot match because a previous clause at line 2 always matches
 
-The compiler is telling us that invoking the `join` function with two arguments will always choose the first definition of `join` whereas the second one will only be invoked when three arguments are passed:
+编译器告诉我们当我们调用带有两个参数的 `join` 函数的时候会总是选择 `join` 的第一个定义，而第二个只会在传进三个参数的时候被调用：
 
 ```bash
 $ iex concat.exs
@@ -270,4 +269,4 @@ iex> Concat.join "Hello", "world", "_"
 "Hello_world"
 ```
 
-This finishes our short introduction to modules. In the next chapters, we will learn how to use named functions for recursion, explore Elixir lexical directives that can be used for importing functions from other modules and discuss module attributes.
+简短的模块介绍到此为止。在接下来章节中，我们将会学到如何用命名函数实现递归，了解 Elixir 中可以用于从其它模块引入函数的词法指令，讨论模块属性。

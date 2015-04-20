@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Pattern matching
+title: 模式匹配
 redirect_from: /getting_started/4.html
 ---
 
@@ -8,11 +8,11 @@ redirect_from: /getting_started/4.html
 
 {% include toc.html %}
 
-In this chapter, we will show how the `=` operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator `^` used to access previously bound values.
+本章中，我们将会看到 Elixir 中的 `=` 操作符实际上是一个匹配操作符，以及如何用它在数据结构中使用模式匹配。最后，我们将会学习如何用固定操作符 `^` 来访问之前绑定的值。
 
-## The match operator
+## 匹配操作符
 
-We have used the `=` operator a couple times to assign variables in Elixir:
+我们已经在 Elixir 中用过几次 `=` 操作符来为变量赋值了：
 
 ```iex
 iex> x = 1
@@ -21,7 +21,7 @@ iex> x
 1
 ```
 
-In Elixir, the `=` operator is actually called *the match operator*. Let's see why:
+实际上，在 Elixir 中 `=` 被称作 **匹配操作符**。 让我们来看看这是为什么：
 
 ```iex
 iex> 1 = x
@@ -30,20 +30,20 @@ iex> 2 = x
 ** (MatchError) no match of right hand side value: 1
 ```
 
-Notice that `1 = x` is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a `MatchError` is raised.
+注意这里的 `1 = x` 是一个合法的表达式，它能够匹配是因为左右两侧都等于 1。 当两侧不匹配的时候，会引发一个 `MatchError` 错误。
 
-A variable can only be assigned on the left side of `=`:
+只有当一个变量在 `=` 左侧的时候才能被赋值：
 
 ```iex
 iex> 1 = unknown
 ** (RuntimeError) undefined function: unknown/0
 ````
 
-Since there is no variable `unknown` previously defined, Elixir imagined you were trying to call a function named `unknown/0`, but such a function does not exist.
+由于之前没有定义过一个 `unknown` 变量， Elixir 认为你在试图调用一个名为 `unknown/0` 的函数， 但并不存在这样的函数。
 
-## Pattern matching
+## 模式匹配
 
-The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:
+匹配操作符不仅仅用于匹配简单的值，它也可以用来解构复杂的数据类型。例如，我们可以在元组上进行模式匹配：
 
 ```iex
 iex> {a, b, c} = {:hello, "world", 42}
@@ -54,21 +54,21 @@ iex> b
 "world"
 ```
 
-A pattern match will error in the case that the sides can't match. This is, for example, the case when the tuples have different sizes:
+假如两边无法匹配，模式匹配就会报错。例如，当两个元组大小不一样时：
 
 ```iex
 iex> {a, b, c} = {:hello, "world"}
 ** (MatchError) no match of right hand side value: {:hello, "world"}
 ```
 
-And also when comparing different types:
+或者当匹配不同的类型的时候：
 
 ```iex
 iex> {a, b, c} = [:hello, "world", "!"]
 ** (MatchError) no match of right hand side value: [:hello, "world", "!"]
 ```
 
-More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom `:ok`:
+更有趣的是，我们可以匹配指定的值。下面的例子中可以看出，只有当右侧是一个以原子 `:ok` 开头的元组时，左侧才会与之匹配：
 
 ```iex
 iex> {:ok, result} = {:ok, 13}
@@ -80,7 +80,7 @@ iex> {:ok, result} = {:error, :oops}
 ** (MatchError) no match of right hand side value: {:error, :oops}
 ```
 
-We can pattern match on lists:
+我们可以在列表上进行模式匹配：
 
 ```iex
 iex> [a, b, c] = [1, 2, 3]
@@ -89,7 +89,7 @@ iex> a
 1
 ```
 
-A list also supports matching on its own head and tail:
+也可以对一个列表的头部和尾部进行匹配：
 
 ```iex
 iex> [head | tail] = [1, 2, 3]
@@ -100,14 +100,14 @@ iex> tail
 [2, 3]
 ```
 
-Similar to the `hd/1` and `tl/1` functions, we can't match an empty list with a head and tail pattern:
+与 `hd/1` 和 `tl/1` 函数类似，我们无法对一个空列表匹配头部和尾部：
 
 ```iex
 iex> [h|t] = []
 ** (MatchError) no match of right hand side value: []
 ```
 
-The `[head | tail]` format is not only used on pattern matching but also for prepending items to a list:
+`[head | tail]` 格式不仅仅用在模式匹配上，还可以用于添加项到一个列表的头部：
 
 ```iex
 iex> list = [1, 2, 3]
@@ -116,11 +116,11 @@ iex> [0|list]
 [0, 1, 2, 3]
 ```
 
-Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.
+模式匹配允许开发者可以很简单地解构如元组和列表的数据类型。 正如我们将在接来的章节中看到的，它是 Elixir 中递归的一个基础，另外它也可以用在其它类型上，像是 map 和 binary。
 
-## The pin operator
+## 固定操作符
 
-Variables in Elixir can be rebound:
+Elixir 中的变量可以被重新绑定：
 
 ```iex
 iex> x = 1
@@ -129,7 +129,7 @@ iex> x = 2
 2
 ```
 
-The pin operator `^` can be used when there is no interest in rebinding a variable but rather in matching against its value prior to the match:
+如果不想重新绑定一个变量，而是为了匹配之前的值，就需要用到固定操作符 `^`了：
 
 ```iex
 iex> x = 1
@@ -142,7 +142,7 @@ iex> x
 2
 ```
 
-Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:
+注意如果一个变量在一个模式中多次出现，所有的引用都应该绑定到同一个模式上：
 
 ```iex
 iex> {x, x} = {1, 1}
@@ -151,7 +151,7 @@ iex> {x, x} = {1, 2}
 ** (MatchError) no match of right hand side value: {1, 2}
 ```
 
-In some cases, you don't care about a particular value in a pattern. It is a common practice to bind those values to the underscore, `_`. For example, if only the head of the list matters to us, we can assign the tail to underscore:
+在某些情况下，你不关心一个模式中的某个值。通常的做法是将那些值绑定到下划线 `_`。 举个例子，如果我们只关心列表的头部，我们可以把尾部赋值给下划线：
 
 ```iex
 iex> [h | _] = [1, 2, 3]
@@ -160,18 +160,18 @@ iex> h
 1
 ```
 
-The variable `_` is special in that it can never be read from. Trying to read from it gives an unbound variable error:
+这里 `_` 是个特殊的变量，它永远无法被读取。 试图读取的话，会得到一个未绑定变量的错误：
 
 ```iex
 iex> _
 ** (CompileError) iex:1: unbound variable _
 ```
 
-Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:
+尽管模式匹配允许我们构建强大的结构，但它却不是万能的。例如，你无法在一个匹配的左侧调用函数。下面的例子是无效的：
 
 ```iex
 iex> length([1,[2],3]) = 3
 ** (CompileError) iex:1: illegal pattern
 ```
 
-This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs.
+我们对模式匹配的介绍就到此为止。 在接下来的一章中你会看到，模式匹配在很多语言结构中是非常常见的。

@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Protocols
+title: 协议
 redirect_from: /getting_started/16.html
 ---
 
@@ -8,6 +8,7 @@ redirect_from: /getting_started/16.html
 
 {% include toc.html %}
 
+协议是 Elixir 中实现多态的机制。对于任何只要实现了协议数据类型都可以使用该协议的分派。让我们来看一个例子。
 Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
 
 In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
@@ -83,7 +84,7 @@ iex> Blank.blank?("hello")
 ** (Protocol.UndefinedError) protocol Blank not implemented for "hello"
 ```
 
-## Protocols and structs
+## 协议和 Struct
 
 The power of Elixir's extensibility comes when protocols and structs are used together.
 
@@ -139,7 +140,7 @@ end
 
 Now all data types (including structs) that we have not implemented the `Blank` protocol for will be considered non-blank.
 
-## Built-in protocols
+## 内建协议
 
 Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
 

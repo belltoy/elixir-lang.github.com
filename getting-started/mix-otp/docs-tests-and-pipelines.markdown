@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Docs, tests and pipelines
+title: 文档，测试和管道
 redirect_from: /getting_started/mix_otp/9.html
 ---
 
@@ -162,7 +162,7 @@ iex> KVServer.Command.parse "GET shopping\r\n"
 
 You can read more about doctests in [the `ExUnit.DocTest` docs](/docs/stable/ex_unit/#!ExUnit.DocTest.html).
 
-## Pipelines
+## 管道
 
 With our command parser in hand, we can finally start implementing the logic that runs the commands. Let's add a stub definition for this function for now:
 

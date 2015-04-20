@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Introduction to Mix
+title: 介绍 Mix
 redirect_from: /getting_started/mix_otp/1.html
 ---
 
@@ -44,7 +44,7 @@ In this chapter, we will create our first project using Mix and explore differen
 >
 > If you have any questions or improvements to the guide, please let us know in [our mailing list](https://groups.google.com/d/forum/elixir-lang-talk) or [issues tracker](http://github.com/elixir-lang/elixir-lang.github.com/issues) respectively. Your input is really important to help us guarantee the guides are accessible and up to date!
 
-## Our first project
+## 我们的第一个项目
 
 When you install Elixir, besides getting the `elixir`, `elixirc` and `iex` executables, you also get an executable Elixir script named `mix`.
 
@@ -83,7 +83,7 @@ Let's take a brief look at those generated files.
 >
 > When using -S, elixir finds the script wherever it is in your PATH and executes it.
 
-## Project compilation
+## 项目编译
 
 A file named `mix.exs` was generated inside our new project folder (`kv`) and its main responsibility is to configure our project. Let's take a look at it (comments removed):
 
@@ -138,7 +138,7 @@ Once the project is compiled, you can start an `iex` session inside the project 
 $ iex -S mix
 ```
 
-## Running tests
+## 执行测试
 
 Mix also generated the appropriate structure for running our project tests. Mix projects usually follow the convention of having a `<filename>_test.exs` file in the `test` directory for each file in the `lib` directory. For this reason, we can already find a `test/kv_test.exs` corresponding to our `lib/kv.ex` file. It doesn't do much at this point:
 
@@ -211,7 +211,7 @@ This shortcut will be extremely useful as we build our project, allowing us to q
 
 Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.
 
-## Environments
+## 环境
 
 Mix supports the concept of "environments". They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:
 
@@ -238,7 +238,7 @@ Mix will default to the `:dev` environment, except for the `test` task that will
 $ MIX_ENV=prod mix compile
 ```
 
-## Exploring
+## 探索
 
 There is much more to Mix, and we will continue to explore it as we build our project. A [general overview is available on the Mix documentation](/docs/stable/mix/).
 

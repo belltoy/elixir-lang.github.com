@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: try, catch and rescue
+title: try, catch 和 rescue
 redirect_from: /getting_started/19.html
 ---
 
@@ -160,7 +160,7 @@ iex> try do
 ** (RuntimeError) oops, something went wrong
 ```
 
-## Variables scope
+## 变量作用域
 
 It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
 

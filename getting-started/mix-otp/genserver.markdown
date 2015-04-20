@@ -41,7 +41,7 @@ The registry needs to guarantee the dictionary is always up to date. For example
 
 We will use a [GenServer](/docs/stable/elixir/#!GenServer.html) to create a registry process that can monitor the bucket process. GenServers are the go-to abstraction for building generic servers in both Elixir and  <abbr title="Open Telecom Platform">OTP</abbr>.
 
-## Our first GenServer
+## 我们的第一个 GenServer
 
 A GenServer is implemented in two parts: the client API and the server callbacks, either in a single module or in two different modules implementing client API in one and server callbacks in the other. The client and server run in separate processes, with the client passing messages back and forth to the server as its functions are called. Here we use a single module for both the server callbacks and client API. Create a new file at `lib/kv/registry.ex` with the following contents:
 
@@ -119,7 +119,7 @@ There are other tuple formats both `handle_call/3` and `handle_cast/2` callbacks
 
 For now, let's write some tests to guarantee our GenServer works as expected.
 
-## Testing a GenServer
+## 测试 GenServer
 
 Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at `test/kv/registry_test.exs` with the following:
 
@@ -245,7 +245,7 @@ Observe that we were able to considerably change the server implementation witho
 
 Finally, different from the other callbacks, we have defined a "catch-all" clause for `handle_info/2` that discards any unknown message. To understand why, let's move on to the next section.
 
-## `call`, `cast` or `info`?
+## `call`, `cast` 还是 `info`？
 
 So far we have used three callbacks: `handle_call/3`, `handle_cast/2` and `handle_info/2`. Deciding when to use each is straightforward:
 
@@ -259,7 +259,7 @@ Since any message, including the ones sent via `send/2`, go to `handle_info/2`, 
 
 We don't need to worry about this for `handle_call/3` and `handle_cast/2` because these requests are only done via the `GenServer` API, so an unknown message is quite likely to be due to a developer mistake.
 
-## Monitors or links?
+## 监控还是链接？
 
 We have previously learned about links in the [Process chapter](/getting-started/processes.html). Now, with the registry complete, you may be wondering: when should we use monitors and when should we use links?
 

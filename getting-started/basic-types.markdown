@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Basic types
+title: 基本类型
 redirect_from: /getting_started/2.html
 ---
 
@@ -8,7 +8,7 @@ redirect_from: /getting_started/2.html
 
 {% include toc.html %}
 
-In this chapter we will learn more about Elixir basic types: integers, floats, booleans, atoms, strings, lists and tuples. Some basic types are:
+在这个章节中我们将会学到更多关于 Elixir 的基本类型：整型，浮点型，布尔型，原子，字符串，列表和元组。下面举了些例子：
 
 ```iex
 iex> 1          # integer
@@ -21,9 +21,9 @@ iex> [1, 2, 3]  # list
 iex> {1, 2, 3}  # tuple
 ```
 
-## Basic arithmetic
+## 基本运算
 
-Open up `iex`  and type the following expressions:
+打开 `iex` 并输入下面的表达式：
 
 ```iex
 iex> 1 + 2
@@ -34,7 +34,7 @@ iex> 10 / 2
 5.0
 ```
 
-Notice that `10 / 2` returned a float `5.0` instead of an integer `5`. This is expected. In Elixir, the operator `/` always returns a float. If you want to do integer division or get the division remainder, you can invoke the `div` and `rem` functions:
+注意到 `10/2` 返回的是一个浮点值 `5.0` 而不是整型 `5`。这与预期的情况相符。在 Elixir 中， `/` 操作符总是返回一个浮点值。如果你要做整数除法或者求余数，可以调用 `div` 和 `rem` 函数：
 
 ```iex
 iex> div(10, 2)
@@ -45,9 +45,9 @@ iex> rem 10, 3
 1
 ```
 
-Notice that parentheses are not required in order to invoke a function.
+注意到，调用函数的时候圆括号不是必需的。
 
-Elixir also supports shortcut notations for entering binary, octal and hexadecimal numbers:
+Elixir 也支持输入二进制，八进制和十六进制的数字。
 
 ```iex
 iex> 0b1010
@@ -58,7 +58,7 @@ iex> 0x1F
 31
 ```
 
-Float numbers require a dot followed by at least one digit and also support `e` for the exponent number:
+浮点数要求小数点跟在至少一个数字之后，并且支持 `e` 表示阶数（译注：科学计数法）：
 
 ```iex
 iex> 1.0
@@ -67,9 +67,9 @@ iex> 1.0e-10
 1.0e-10
 ```
 
-Floats in Elixir are 64 bit double precision.
+Elixir 中浮点数是 64 位双精度的。
 
-You can invoke the `round` function to get the closest integer to a given float, or the `trunc` function to get the integer part of a float.
+你可以调用 `round` 函数来对一个浮点数求整数近似值，或者 `trunc` 函数来获取一个浮点数的整数部分。
 
 ```iex
 iex> round 3.58
@@ -78,9 +78,9 @@ iex> trunc 3.58
 3
 ```
 
-## Booleans
+## 布尔值
 
-Elixir supports `true` and `false` as booleans:
+Elixir 支持布尔值 `true` 和 `false`：
 
 ```iex
 iex> true
@@ -89,9 +89,9 @@ iex> true == false
 false
 ```
 
-Elixir provides a bunch of predicate functions to check for a value type. For example, the `is_boolean/1` function can be used to check if a value is a boolean or not:
+Elixir 提供了一系列判定函数来检查值的类型。例如， `is_boolean/1` 函数可以用来检查一个值是否是布尔值：
 
-> Note: Functions in Elixir are identified by name and by number of arguments (i.e. arity). Therefore, `is_boolean/1` identifies a function named `is_boolean` that takes 1 argument. `is_boolean/2` identifies a different (nonexistent) function with the same name but different arity.
+> 注意： Elixir 中的函数是用名字和元数（即参数数量 arity）来标识的。因此，`is_boolean/1` 表示一个名为 `is_boolean` 并且接受一个参数的函数。`is_boolean/2` 表示一个不同的函数（这个函数实际中不存在），虽然名字相同但元数不同。
 
 ```iex
 iex> is_boolean(true)
@@ -99,14 +99,13 @@ true
 iex> is_boolean(1)
 false
 ```
+你可以使用 `is_integer/1`，`is_float/1` 或者 `is_number/1` 来分别检查一个参数是否是整数，浮点数或者两者之一。
 
-You can also use `is_integer/1`, `is_float/1` or `is_number/1` to check, respectively, if an argument is an integer, a float or either.
+> 注意：任何时候你都可以在 shell 中输入 `h` 来打印关于 shell 使用帮助信息。`h` 帮助也可以用来访问任意函数的文档。例如，输入 `h is_integer/1` 将会打印出 `is_integer/1` 函数的文档。它也可以用在操作符和其它结构上（试试 `h ==/2`）。
 
-> Note: At any moment you can type `h` in the shell to print information on how to use the shell. The `h` helper can also be used to access documentation for any function. For example, typing `h is_integer/1` is going to print the documentation for the `is_integer/1` function. It also works with operators and other constructs (try `h ==/2`).
+## 原子
 
-## Atoms
-
-Atoms are constants where their name is their own value. Some other languages call these symbols:
+原子是以名字为值的恒量。一些其它语言中称之为符号（Symbols）：
 
 ```iex
 iex> :hello
@@ -115,7 +114,7 @@ iex> :hello == :world
 false
 ```
 
-The booleans `true` and `false` are, in fact, atoms:
+布尔值 `true` 和 `false` 实际上也是原子：
 
 ```iex
 iex> true == :true
@@ -126,25 +125,25 @@ iex> is_boolean(:false)
 true
 ```
 
-## Strings
+## 字符串
 
-Strings in Elixir are inserted between double quotes, and they are encoded in UTF-8:
+Elixir 中的字符串是用双引号包围的，而且是用 UTF-8 编码的：
 
 ```iex
 iex> "hellö"
 "hellö"
 ```
 
-> Note: if you are running on Windows, there is a chance your terminal does not use UTF-8 by default. You can change the encoding of your current session by running `chcp 65001` before entering iex.
+> 注意： 如果你是在 Windows 上，你的终端有可能默认不是使用 UTF-8 。你可以在进入 iex 之前通过运行 `chcp 65001` 来修改当前会话的编码。
 
-Elixir also supports string interpolation:
+Elixir 也支持字符串插值：
 
 ```iex
 iex> "hellö #{:world}"
 "hellö world"
 ```
 
-Strings can have line breaks in them or introduce them using escape sequences:
+字符串中可以包含换行符，或者用转义序列表示：
 
 ```iex
 iex> "hello
@@ -154,7 +153,7 @@ iex> "hello\nworld"
 "hello\nworld"
 ```
 
-You can print a string using the `IO.puts/1` function from the `IO` module:
+你可以用 `IO` 模块中的 `IO.outs/1` 函数来打印一个字符串：
 
 ```iex
 iex> IO.puts "hello\nworld"
@@ -163,39 +162,39 @@ world
 :ok
 ```
 
-Notice the `IO.puts/1` function returns the atom `:ok` as result after printing.
+注意 `IO.puts/1` 函数在打印完之后，返回的结果是原子 `:ok`。
 
-Strings in Elixir are represented internally by binaries which are sequences of bytes:
+Elixir 中的字符串在内部是用字节序列的二进制来表示的：
 
 ```iex
 iex> is_binary("hellö")
 true
 ```
 
-We can also get the number of bytes in a string:
+我们也能获得一个字符串包含的字节数：
 
 ```iex
 iex> byte_size("hellö")
 6
 ```
 
-Notice the number of bytes in that string is 6, even though it has 5 characters. That's because the character "ö" takes 2 bytes to be represented in UTF-8. We can get the actual length of the string, based on the number of characters, by using the `String.length/1` function:
+注意上面这个字符串包含的字节数是 6，即使它只包含了 5 个字符。那是因为字符 "ö" 用 UTF-8 表示需要占两个字节。我们可以用 `String.length/1` 函数来得到字符串中字符数的实际长度：
 
 ```iex
 iex> String.length("hellö")
 5
 ```
 
-The [String module](/docs/stable/elixir/#!String.html) contains a bunch of functions that operate on strings as defined in the Unicode standard:
+[String 模块](/docs/stable/elixir/#!String.html) 包含了一系列对字符串进行 Unicode 标准操作的函数：
 
 ```iex
 iex> String.upcase("hellö")
 "HELLÖ"
 ```
 
-## Anonymous functions
+## 匿名函数
 
-Functions are delimited by the keywords `fn` and `end`:
+函数是用关键词 `fn` 和 `end` 来界定的：
 
 ```iex
 iex> add = fn a, b -> a + b end
@@ -210,11 +209,11 @@ iex> add.(1, 2)
 3
 ```
 
-Functions are "first class citizens" in Elixir meaning they can be passed as arguments to other functions just as integers and strings can. In the example, we have passed the function in the variable `add` to the `is_function/1` function which correctly returned `true`. We can also check the arity of the function by calling `is_function/2`.
+在 Elixir 中函数是 「一等公民」， 这意味着它们可以被像整型和字符串一样当作参数传递到其它函数中。 在上面的例子中，我们把变量 `add` 指向的函数传递给 `is_function/1` 函数， 然后正确得返回了 `true`。 我们还能够通过调用 `is_function/2` 检查函数的元数。
 
-Note a dot (`.`) between the variable and parenthesis is required to invoke an anonymous function.
+注意调用匿名函数的时候，在变量名和括号之间的点（`.`)是必需的。
 
-Anonymous functions are closures, and as such they can access variables that are in scope when the function is defined:
+匿名函数是闭包，因此它们能够访问在它被定义的时候作用域里的变量：
 
 ```iex
 iex> add_two = fn a -> add.(a, 2) end
@@ -223,7 +222,7 @@ iex> add_two.(2)
 4
 ```
 
-Keep in mind that a variable assigned inside a function does not affect its surrounding environment:
+请记住，在函数内部赋值变量不会影响其外部的环境：
 
 ```iex
 iex> x = 42
@@ -234,9 +233,9 @@ iex> x
 42
 ```
 
-## (Linked) Lists
+## (链式) 列表
 
-Elixir uses square brackets to specify a list of values. Values can be of any type:
+Elixir 用方括号来指定一个列表。它的值可以是任意类型：
 
 ```iex
 iex> [1, 2, true, 3]
@@ -245,7 +244,7 @@ iex> length [1, 2, 3]
 3
 ```
 
-Two lists can be concatenated and subtracted using the `++/2` and `--/2` operators:
+两个列表可以用 `++/2` 和 `--/2` 操作符进行连接和消除操作：
 
 ```iex
 iex> [1, 2, 3] ++ [4, 5, 6]
@@ -254,7 +253,7 @@ iex> [1, true, 2, false, 3, true] -- [true, false]
 [1, 2, 3, true]
 ```
 
-Throughout the tutorial, we will talk a lot about the head and tail of a list. The head is the first element of a list and the tail is the remainder of a list. They can be retrieved with the functions `hd/1` and `tl/1`. Let's assign a list to a variable and retrieve its head and tail:
+在本教程中，我们将会讨论许多关于列表头部（head）和尾部（tail）。头部是一个列表的第一个元素，尾部是剩余的部分。它们可以用函数 `hd/1` 和 `tl/1` 来取出。让我们来指定一个列表给一个变量，然后取出它的头部和尾部：
 
 ```iex
 iex> list = [1,2,3]
@@ -264,14 +263,14 @@ iex> tl(list)
 [2, 3]
 ```
 
-Getting the head or the tail of an empty list is an error:
+尝试取出一个空列表的头部和尾部会引发一个错误：
 
 ```iex
 iex> hd []
 ** (ArgumentError) argument error
 ```
 
-Sometimes you will create a list and it will return a value in single-quotes. For example:
+有时候你创建一个列表，返回的是一个用单引号包围的值。例如：
 
 ```iex
 iex> [11, 12, 13]
@@ -280,20 +279,20 @@ iex> [104, 101, 108, 108, 111]
 'hello'
 ```
 
-When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters). Char lists are quite common when interfacing with existing Erlang code.
+当 Elixir 看见一个包含 ASCII 数字的列表时， Elixir 会将它打印成一个字符列表（显示成一个字符的列表）。当与 Erlang 现有代码时对接时，字符列表是非常常见的。
 
-Keep in mind single-quoted and double-quoted representations are not equivalent in Elixir as they are represented by different types:
+请记住， 在 Elixir 中，用单引号包围的和用双引号包围的表示法不是等价的，因为它们表示了不同的类型：
 
 ```iex
 iex> 'hello' == "hello"
 false
 ```
 
-Single-quotes are char lists, double-quotes are strings. We will talk more about them in the ["Binaries, strings and char lists"](/getting-started/binaries-strings-and-char-lists.html) chapter.
+单引号包围的是字符列表，双引号包围的是字符串。我们将在 「二进制，字符串和字符列表」 这章中更多地讨论它们。
 
-## Tuples
+## 元组
 
-Elixir uses curly brackets to define tuples. Like lists, tuples can hold any value:
+Elixir 用花括号来定义元组。与列表一样，元组里可以放入任意的值：
 
 ```iex
 iex> {:ok, "hello"}
@@ -302,7 +301,7 @@ iex> tuple_size {:ok, "hello"}
 2
 ```
 
-Tuples store elements contiguously in memory. This means accessing a tuple element per index or getting the tuple size is a fast operation (indexes start from zero):
+元组将元素连续地存放在内存中。这意味着按照索引访问一个元组的元素或者获得元组在大小是一个快速的操作（索引从零开始）：
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -313,7 +312,7 @@ iex> tuple_size(tuple)
 2
 ```
 
-It is also possible to set an element at a particular index in a tuple with `put_elem/3`:
+用 `put_elem/3` 来设置元组中一个特定索引的元素也是可能的：
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -324,22 +323,22 @@ iex> tuple
 {:ok, "hello"}
 ```
 
-Notice that `put_elem/3` returned a new tuple. The original tuple stored in the `tuple` variable was not modified because Elixir data types are immutable. By being immutable, Elixir code is easier to reason about as you never need to worry if a particular code is mutating your data structure in place.
+注意到 `put_elem/3` 返回一个新的元组。存储在 `tuple` 变量中原始的元组并没有被修改，这里因为 Elixir 的数据类型是不可变的。由于是不可变的， Elixir 代码更为容易理解为什么你永远不用担心一个特定的代码是否会就地修改你的数据结构。
 
-By being immutable, Elixir also helps eliminate common cases where concurrent code has race conditions because two different entities are trying to change a data structure at the same time.
+由于是不可变的， Elixir 也有助于消除这种常见的情况，并发代码中由于不同实体同时尝试修改一个数据结构引发的竞态条件。
 
-## Lists or tuples?
+## 列表还是元组？
 
-What is the difference between lists and tuples?
+列表和元组之间有什么不同之处呢？
 
-Lists are stored in memory as linked lists, meaning that each element in a list holds its value and points to the following element until the end of the list is reached. We call each pair of value and pointer a **cons cell**:
+列表是以链表的形式存储在内存中的，这意味着列表中的每个元素保存其值的同时还指向下一个元素，直到列表结束。我们将每一对值和指针称为一个 **结构单元**（cons cell）：
 
 ```iex
 iex> list = [1|[2|[3|[]]]]
 [1, 2, 3]
 ```
 
-This means accessing the length of a list is a linear operation: we need to traverse the whole list in order to figure out its size. Updating a list is fast as long as we are prepending elements:
+这意味着访问一个列表的长度是一个线性操作： 我们需要遍历整个列表来算出它的大小。 更新一个列表很快，我们只要在前面加上元素：
 
 ```iex
 iex> [0] ++ list
@@ -348,11 +347,11 @@ iex> list ++ [4]
 [1, 2, 3, 4]
 ```
 
-The first operation is fast because we are simply adding a new cons that points to the remaining of `list`. The second one is slow because we need to rebuild the whole list and add a new element to the end.
+上面的例子中，第一个操作很快，因为我们只是简单地添加了一个结构，并将它指向 `list`。第二个操作很慢，因为我们需要重建整个列表，然后添加一个新的元素到末尾。
 
-Tuples, on the other hand, are stored contiguously in memory. This means getting the tuple size or accessing an element by index is fast. However, updating or adding elements to tuples is expensive because it requires copying the whole tuple in memory.
+另一方面，元组是连续地存储在内存中的。这意味着获取它的大小或者以索引的方式访问一个元素是很快的。但是，更新或者添加元素到一个元组中的操作是昂贵的，因为这需要在内存中拷贝整个元组。
 
-Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is to use them to return extra information from a function. For example, `File.read/1` is a function that can be used to read file contents and it returns tuples:
+这些性能特性决定了这些数据结构的使用方式。元组的一个非常常见的用例是用它们从函数中返回附加信息。例如， `File.read/1` 是一个用来读取文件内容的函数，它返回一个元组：
 
 ```iex
 iex> File.read("path/to/existing/file")
@@ -361,9 +360,9 @@ iex> File.read("path/to/unknown/file")
 {:error, :enoent}
 ```
 
-If the path given to `File.read/1` exists, it returns a tuple with the atom `:ok` as the first element and the file contents as the second. Otherwise, it returns a tuple with `:error` and the error description.
+如果传给 `File.read/1` 的路径存在，它返回一个元组，第一个元素是原子 `:ok`，第二个元素是文件内容。否则，返回一个包含 `:error` 和错误描述的元组。
 
-Most of the time, Elixir is going to guide you to do the right thing. For example, there is a `elem/2` function to access a tuple item but there is no built-in equivalent for lists:
+大多数时候， Elixir 会引导你做正确的事情。例如，有一个 `elem/2` 函数用来访问一个元组中的项，但对于列表来说却没有等价的操作：
 
 ```iex
 iex> tuple = {:ok, "hello"}
@@ -372,8 +371,8 @@ iex> elem(tuple, 1)
 "hello"
 ```
 
-When "counting" the number of elements in a data structure, Elixir also abides by a simple rule: the function should be named `size` if the operation is in constant time (i.e. the value is pre-calculated) or `length` if the operation requires explicit counting.
+当「计算」一个数据结构中的元素数量的时候， Elixir 同样遵循着这么一条简单的原则：如果操作时间是恒量（也就是说这个值是预先计算好的），那么这个函数应该命名为 `size`，如果操作需要明确地计数，函数则应该命名为 `length`。
 
-For example, we have used 4 counting functions so far: `byte_size/1` (for the number of bytes in a string), `tuple_size/1` (for the tuple size), `length/1` (for the list length) and `String.length/1` (for the number of characters in a string). That said, we use `byte_size` to get the number of bytes in a string, which is cheap, but retrieving the number of unicode characters uses `String.length`, since the whole string needs to be iterated.
+例如，我们到目前为止用过 4 个计数的函数： `byte_size/1` （获取字符串中的字节数量）， `tuple_size/1` （获取元组的大小）， `length/1` （获取列表的长度）， `String.length/1` （获取一个字符串中的字符数量）。这就是说，我们用 `byte_size` 来获取一个字符串中的字节数是廉价的，但是用 `String.length` 来获取字符串中 unicode 字符的数量却是昂贵的操作，因为需要遍历整个字符串。
 
-Elixir also provides `Port`, `Reference` and `PID` as data types (usually used in process communication), and we will take a quick look at them when talking about processes. For now, let's take a look at some of the basic operators that go with our basic types.
+Elixir 还提供了 `Port`，`Reference` 和 `PID` 作为数据类型 （一般用在进程通讯中），我们将在讨论进程的时候快速浏览一下这些类型。现在，我们来看一下我们这些基本类型相应的一些基本操作符。

@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Module attributes
+title: 模块属性
 redirect_from: /getting_started/14.html
 ---
 
@@ -8,17 +8,17 @@ redirect_from: /getting_started/14.html
 
 {% include toc.html %}
 
-Module attributes in Elixir serve three purposes:
+Elixir 中的模块属性有三个作用：
 
-1. They serve to annotate the module, often with information to be used by the user or the <abbr title="Virtual Machine">VM</abbr>.
-2. They work as constants.
-3. They work as a temporary module storage to be used during compilation.
+1. 它们为模块提供注释，通常包含了对用户和 <abbr title="Virtual Machine">VM</abbr> 有用的信息。
+2. 它们可以作为常量。
+3. 它们可以在编译时作为模块的临时存储。
 
-Let's check each case, one by one.
+让我们一个个来看。
 
-## As annotations
+## 作为注释
 
-Elixir brings the concept of module attributes from Erlang. For example:
+Elixir 是从 Erlang 中带来模块属性的概念。例如：
 
 ```elixir
 defmodule MyServer do
@@ -26,18 +26,18 @@ defmodule MyServer do
 end
 ```
 
-In the example above, we are explicitly setting the version attribute for that module. `@vsn` is used by the code reloading mechanism in the Erlang <abbr title="Virtual Machine">VM</abbr> to check if a module has been updated or not. If no version is specified, the version is set to the MD5 checksum of the module functions.
+在上面的例子中，我们明确地为那个模块设定了版本属性。 `@vsn` 是用于 Erlang <abbr title="Virtual Machine">VM</abbr> 中的代码重载机制，用来检查一个模块是否已经更新。如果没有指定版本，版本号就是模块函数的 MD5 校验值。
 
-Elixir has a handful of reserved attributes. Here are just a few of them, the most commonly used ones:
+Elixir 有一些保留的属性。这里只是其中最常用的一些：
 
-* `@moduledoc` - provides documentation for the current module.
-* `@doc` - provides documentation for the function or macro that follows the attribute.
-* `@behaviour` - (notice the British spelling) used for specifying an <abbr title="Open Telecom Platform">OTP</abbr> or user-defined behaviour.
-* `@before_compile` - provides a hook that will be invoked before the module is compiled. This makes it possible to inject functions inside the module exactly before compilation.
+* `@moduledoc` - 为当前模块提供文档。
+* `@doc` - 为紧跟着这个属性之后的函数或者宏提供文档。
+* `@behaviour` - （注意是英式英语拼写）用于指定一个 <abbr title="Open Telecom Platform">OTP</abbr> 或者用户自定义的行为。
+* `@before_compile` - 提供一个在模块编译之前会被调用的 hook。 这使得可以在编译之前为模块注入函数。
 
-`@moduledoc` and `@doc` are by far the most used attributes, and we expect you to use them a lot. Elixir treats documentation as first-class and provides many functions to access documentation.
+`@moduledoc` 和 `@doc` 是目前为止最常用的属性，我们建议你多使用它们。 Elixir 把文档当作一等公民，并提供了很多用于访问文档的函数。
 
-Let's go back to the `Math` module defined in the previous chapters, add some documentation and save it to the `math.ex` file:
+让我们回头看看在之前的章节中定义的 `Math` 模块，为它添加一些文档，并保存在 `math.ex` 文件中：
 
 ```elixir
 defmodule Math do
@@ -58,7 +58,7 @@ defmodule Math do
 end
 ```
 
-Elixir promotes the use of markdown with heredocs to write readable documentation. Heredocs are multiline strings, they start and end with triple quotes, keeping the formatting of the inner text. We can access the documentation of any compiled module directly from IEx:
+Elixir 提供使用 markdown 和 heredoc 来编写高可读性的文档。 heredoc 是多行字符串，它们以三个引号作为起止，保持内部文本的格式。我们可以直接从 IEx 中访问任意已编译的模块的文档：
 
 ```bash
 $ elixirc math.ex
@@ -72,21 +72,21 @@ iex> h Math.sum # Access the docs for the sum function
 ...
 ```
 
-We also provide a tool called [ExDoc](https://github.com/elixir-lang/ex_doc) which is used to generate HTML pages from the documentation.
+我们还提供了一个名为 [ExDoc](https://github.com/elixir-lang/ex_doc) 的工具，用于生成 HTML 格式的文档。
 
-You can take a look at the docs for [Module](/docs/stable/elixir/#!Module.html) for a complete list of supported attributes. Elixir also uses attributes to define [typespecs](/docs/stable/elixir/#!Kernel.Typespec.html), via:
+我们可以在 [Module](/docs/stable/elixir/#!Module.html) 文档中看到支持的属性的完整列表。 Elixir 还用属性来定义 [typespecs](/docs/stable/elixir/#!Kernel.Typespec.html)，通过：
 
-* `@spec` - provides a specification for a function.
-* `@callback` - provides a specification for the behaviour callback.
-* `@type` - defines a type to be used in `@spec`.
-* `@typep` - defines a private type to be used in `@spec`.
-* `@opaque` - defines an opaque type to be used in `@spec`.
+* `@spec` - 为函数提供一个规范。
+* `@callback` - 为行为的回调提供一个规范。
+* `@type` - 定义一个在 `@spec` 中用到的类型。
+* `@typep` - 定义一个在 `@spec` 中用到的私有类型。
+* `@opaque` - 定义一个在 `@spec` 中用到的 opaque 类型。
 
-This section covers built-in attributes. However, attributes can also be used by developers or extended by libraries to support custom behaviour.
+本节包含了内建的属性。然而，属性也可以被开发者使用，或者被库扩展为支持自定义的行为。
 
-## As constants
+## 作为常量
 
-Elixir developers will often use module attributes to be used as constants:
+Elixir 开发者经常将模块属性当作常量：
 
 ```elixir
 defmodule MyServer do
@@ -95,9 +95,9 @@ defmodule MyServer do
 end
 ```
 
-> Note: Unlike Erlang, user defined attributes are not stored in the module by default. The value exists only during compilation time. A developer can configure an attribute to behave closer to Erlang by calling [`Module.register_attribute/3`](/docs/stable/elixir/#!Module.html#register_attribute/3).
+> 注意： 不像 Erlang，用户定义的属性默认不是存储在模块里的。它们的值只有在编译期才存在。开发者可以通过调用 [`Module.register_attribute/3`](/docs/stable/elixir/#!Module.html#register_attribute/3) 来配置一个属性使得它接近 Erlang 中的行为。
 
-Trying to access an attribute that was not defined will print a warning:
+尝试访问一个未定义的属性会打印出一个警告信息：
 
 ```elixir
 defmodule MyServer do
@@ -106,7 +106,7 @@ end
 warning: undefined module attribute @unknown, please remove access to @unknown or explicitly set it to nil before access
 ```
 
-Finally, attributes can also be read inside functions:
+最后，属性也可以在函数内部访问：
 
 ```elixir
 defmodule MyServer do
@@ -120,13 +120,13 @@ MyServer.first_data #=> 14
 MyServer.second_data #=> 13
 ```
 
-Notice that reading an attribute inside a function takes a snapshot of its current value. In other words, the value is read at compilation time and not at runtime. As we are going to see, this makes attributes useful to be used as storage during module compilation.
+注意到，从函数内部读取一个属性会拿到当前值的快照。换言之，该值是在编译期读取的而不是在运行时。正如我们将要看到的，这使得属性可以用于在编译期作为临时存储。
 
-## As temporary storage
+## 作为临时存储
 
-One of the projects in the Elixir organization is [the `Plug` project](https://github.com/elixir-lang/plug), which is meant to be a common foundation for building web libraries and frameworks in Elixir.
+Elixir 组织的其中一个项目 [`Plug` 项目](https://github.com/elixir-lang/plug) ，它旨在成为 Elixir 中构建 web 库和框架的通用基础。
 
-The Plug library also allows developers to define their own plugs which can be run in a web server:
+Plug 库也允许开发者定义他们自己的能运行在 web server 中的 plug：
 
 ```elixir
 defmodule MyPlug do
@@ -148,11 +148,11 @@ IO.puts "Running MyPlug with Cowboy on http://localhost:4000"
 Plug.Adapters.Cowboy.http MyPlug, []
 ```
 
-In the example above, we have used the `plug/1` macro to connect functions that will be invoked when there is a web request. Internally, every time you call `plug/1`, the Plug library stores the given argument in a `@plugs` attribute. Just before the module is compiled, Plug runs a callback that defines a method (`call/2`) which handles http requests. This method will run all plugs inside `@plugs` in order.
+在上面的例子中，我们用了 `plug/1` 宏来连接那些会在一个 web 请求发起的时候被调用的函数。从内部来说，每次你调用 `plug/1`， Plug 库会将传入的参数保存在 `@plugs` 属性中。就在模块被编译的时候，Plug 运行一个定义了一个方法 （`call/2`） 的回调，用于处理 http 请求。这个方法会按顺序运行在 `@plugs` 里的所有 plug。
 
-In order to understand the underlying code, we'd need macros, so we will revisit this pattern in the meta-programming guide. However the focus here is exactly on how using module attributes as storage allow developers to create DSLs.
+为了理解底层代码，我们需要宏，所以我们将在元编程教程中再次学习这个模式。然而这里关注的是如何使用模块属性作为存储来允许开发者创建 DSL。
 
-Another example comes from the ExUnit framework which uses module attributes as annotation and storage:
+另一个来自 ExUnit 框架的例子，它使用模块属性作为注释和存储：
 
 ```elixir
 defmodule MyTest do
@@ -165,8 +165,8 @@ defmodule MyTest do
 end
 ```
 
-Tags in ExUnit are used to annotate tests. Tags can be later used to filter tests. For example, you can avoid running external tests on your machine because they are slow and dependent on other services, while they can still be enabled in your build system.
+ExUnit 中的 tag 是用来注释测试用例的。 Tag 可以在之后用来过滤测试用例。例如，你可以防止在你的机器上运行外部测试，因为它们很慢且依赖其它服务，但它们仍然可以在你的构建系统上启用。
 
-We hope this section shines some light on how Elixir supports meta-programming and how module attributes play an important role when doing so.
+我们希望本节能够让你领略到 Elixir 如何支持元编程以及模块属性如何在其中扮演一个重要的角色。
 
-In the next chapters we'll explore structs and protocols before moving to exception handling and other constructs like sigils and comprehensions.
+在接下来的章节中，在继续深入异常处理和其它像 sigil 和列表解析的结构之前，我们将先探索 struct 和协议。

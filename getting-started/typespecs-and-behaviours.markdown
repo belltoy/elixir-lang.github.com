@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Typespecs and behaviours
+title: Typespecs 和 behaviours
 redirect_from: /getting_started/20.html
 ---
 
@@ -8,7 +8,7 @@ redirect_from: /getting_started/20.html
 
 {% include toc.html %}
 
-## Types and specs
+## Types 和 specs
 
 Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
 
@@ -32,7 +32,7 @@ def round(number), do: # implementation...
 
 Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the types provided by Elixir [in the typespecs docs](/docs/stable/elixir/#!Kernel.Typespec.html).
 
-### Defining custom types
+### 定义自定义类型
 
 While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
 
@@ -83,7 +83,7 @@ end
 
 If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`.
 
-### Static code analysis
+### 静态代码分析
 
 Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `PoliteCalculator` example, we wrote a spec for the `make_polite/1` function even if it was defined as a private function.
 

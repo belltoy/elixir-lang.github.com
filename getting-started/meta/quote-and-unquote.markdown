@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Quote and unquote
+title: Quote 和 unquote
 redirect_from: /getting_started/meta/1.html
 ---
 

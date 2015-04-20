@@ -1,20 +1,20 @@
 ---
-title: "Erlang/Elixir Syntax: A Crash Course"
+title: "Erlang/Elixir 语法：速成课"
 section: home
 layout: default
 ---
 
 # {{ page.title }}
 
-This is a quick introduction to the Elixir syntax for Erlang developers and vice-versa. It is the absolute minimum amount of knowledge you need in order to understand Elixir/Erlang code, support interoperability, read the docs, sample code, etc.
+这是一个针对 Erlang 开发者的 Elixir 语法快速介绍，反之亦然。 对于理解 Elixir/Erlang 代码，支持互操作性，阅读文档，示例代码等等来说，这绝对是一份对你的知识要求最少的教程。
 
 {% include toc.html %}
 
-## Running code
+## 运行代码
 
 ### Erlang
 
-The fastest way to run some code is to launch the Erlang shell -- `erl`. Many code snippets on this page can be pasted directly into the shell. However, when you want to define a named function, Erlang expects it to be inside of a module, and modules have to be compiled. Here's a skeleton for a module:
+运行一些代码最快的方式是启动一个 Erlang shell ———— `erl` 。 这个页面上的许多代码片断可以被直接粘贴到 shell 里。 然而，如果你要定义一个命名函数， Erlang 期望把它写到一个模块里，然后模块必须被编译。这里是一个模块的骨架：
 
 ```erlang
 % module_name.erl
@@ -24,8 +24,7 @@ The fastest way to run some code is to launch the Erlang shell -- `erl`. Many co
 hello() ->
   io:format("~s~n", ["Hello world!"]).
 ```
-
-Add your functions to it, save it to disk, run `erl` from the same directory and execute the `compile` command:
+把你的函数添加进去，保存到磁盘，在同一个目录中运行 `erl` 并执行 `compile` 命令：
 
 ```erl
 Eshell V5.9  (abort with ^G)
@@ -36,11 +35,11 @@ Hello world!
 ok
 ```
 
-You may keep the shell running while you're editing the file. Just don't forget to execute `c(module_name)` to load the latest changes. Note that the filename has to be the same as the one declared in the `-module()` directive, plus an extension `.erl`.
+当你在编辑文件的时候，你可以保持 shell 一直在运行状态下。 只要别忘了执行 `c(module_name)` 来加载最新的变化。注意到文件名必须和 `-module()` 指令中定义的相同，加上后缀名 `.erl`。
 
 ### Elixir
 
-Elixir too has an interactive shell called `iex`. Compiling Elixir code can be done with `elixirc` (which is similar to Erlang's `erlc`). Elixir also provides an executable named `elixir` to run Elixir code. The module defined above can be written in Elixir as:
+Elixir 同样也有一个交互式的 shell，叫 `iex`。可以用 `elixirc` （与 Erlang 的 `erlc` 相似）来编译 Elixir 的代码。 Elixir 还提供了一个可执行文件 `elixir` 来运行 Elixir 代码。 上面例子中定义的模块可以用 Elixir 来写：
 
 ```elixir
 # module_name.ex
@@ -51,7 +50,7 @@ defmodule ModuleName do
 end
 ```
 
-And compiled from `iex`:
+然后在 `iex` 中编译：
 
 ```iex
 Interactive Elixir
@@ -62,7 +61,7 @@ Hello world!
 :ok
 ```
 
-However notice that in Elixir you don't need to create a file only to create a new module, Elixir modules can be defined directly in the shell:
+然而要注意的是在 Elixir 中如果只要创建一个模块，你不需要创建一个文件， Elixir 模块可以直接在 shell 中定义：
 
 ```elixir
 defmodule MyModule do
@@ -73,29 +72,29 @@ end
 ```
 
 
-## Notable differences
+## 明显的差异
 
-This section goes over some of the syntactic differences between the two languages.
+本节将介绍一些这两种语言之间的语法差异。
 
-### Operator names
+### 操作符名
 
-Some operators are spelled differently.
+一些操作符拼写不同。
 
-| Erlang         | Elixir         | Meaning                                 |
+| Erlang         | Elixir         | 含义                                     |
 |----------------|----------------|-----------------------------------------|
-| and            | NOT AVAILABLE  | Logical 'and', evaluates both arguments |
-| andalso        | and            | Logical 'and', short-circuits           |
-| or             | NOT AVAILABLE  | Logical 'or', evaluates both arguments  |
-| orelse         | or             | Logical 'or', short-circuits            |
-| =:=            | ===            | A match operator                        |
-| =/=            | !==            | A negative match                        |
-| /=             | !=             | Not equals                              |
-| =<             | <=             | Less than or equals                     |
+| and            | NOT AVAILABLE  | 逻辑「与」，两边参数都计算                   |
+| andalso        | and            | 逻辑「与」，短路操作                        |
+| or             | NOT AVAILABLE  | 逻辑「或」，两边参数都计算                   |
+| orelse         | or             | 逻辑「或」，短路操作                        |
+| =:=            | ===            | 相等操作符                                |
+| =/=            | !==            | 不等操作符                                |
+| /=             | !=             | 不等                                     |
+| =<             | <=             | 小于或等于                                |
 
 
-### Delimiters
+### 分隔符
 
-Erlang expressions are terminated with a dot `.` and comma `,` is used to evaluates multiple expressions within one context (in a function definition, for instance). In Elixir, expressions are delimited by a line break or a semicolon `;`.
+Erlang 表达式是用点号 `.` 结束的，逗号 `,` 用于在一个上下文里（例如，在一个函数定义中）计算多个表达式。 在 Elixir 中，表达式用换行符或者分号 `;` 分隔。
 
 **Erlang**
 
@@ -111,11 +110,11 @@ x = 2; y = 3
 x + y
 ```
 
-### Variable names
+### 变量名
 
-Variables in Erlang can only be assigned once. The Erlang shell provides a special command `f` that allows you to erase the binding of a variable or all variables at once.
+Erlang 中的变量只能赋值一次。 Erlang shell 提供了一个特殊的命令 `f` 允许你一次性擦除一个变量或所有变量的绑定。
 
-Elixir allows you to assign to a variable more than once. If you want to match against the value of a previously assigned variable, you should use `^`:
+Elixir 允许你对一个变量赋值多次。如果你要对一个已经赋值的变量作匹配，你要用 `^`：
 
 **Erlang**
 
@@ -150,43 +149,43 @@ iex> ^a = 3
 ** (MatchError) no match of right hand side value: 3
 ```
 
-### Calling functions
+### 调用函数
 
-Elixir allows you to omit parentheses in function calls, Erlang does not.
+Elixir 允许你在调用函数的时候省略括号， Erlang 却不允许这么做。
 
 | Erlang            | Elixir         |
 |-------------------|----------------|
 | some_function().  | some_function  |
 | sum(A, B)         | sum a, b       |
 
-Invoking a function from a module uses different syntax. In Erlang, you would write
+调用一个模块中的函数使用不同的语法。 有 Erlang 中， 你会这么写
 
 ```erlang
 orddict:new().
 ```
 
-to invoke the `new` function from the `orddict` module. In Elixir, use the dot `.` in place of the colon `:`
+来调用 `orddict` 模块中的 `new` 函数。 在 Elixir 中，用点号 `.` 替代冒号 `:`
 
 ```elixir
 Orddict.new
 ```
 
-**Note**. Since Erlang modules are represented by atoms, you may invoke Erlang functions in Elixir as follows:
+**注意**： 因为 Erlang 模块是用原子表示，你应该用如下的方式在 Elixir 中调用 Erlang 函数：
 
 ```elixir
 :lists.sort [3, 2, 1]
 ```
 
-All of the Erlang built-ins reside in the `:erlang` module.
+所有的 Erlang 内建函数都在 `:erlang` 模块中。
 
 
-## Data types
+## 数据类型
 
-Erlang and Elixir have the same data types for the most part, but there are a number of differences.
+很大程度上 Erlang 和 Elixir 有着相同的数据类型，但有一些不同。
 
-### Atoms
+### 原子
 
-In Erlang, an `atom` is any identifier that starts with a lowercase letter, e.g. `ok`, `tuple`, `donut`. Identifiers that start with a capital letters are always treated as variable names. Elixir, on the other hand, uses the former for naming variables, and the latter are treated as atom aliases. Atoms in Elixir always start with a colon `:`.
+在 Erlang 中，一个 `atom` 是一个以小写字母开头的标识符，如 `ok`，`tuple`，`donut`。 大写字母开头的标识符总是作为变量名。 另一方面，在 Elixir 中，使用前者作为变量名，后者作为原子的别名。 Elixir 中的原子都是用冒号 `:` 开头。
 
 **Erlang**
 
@@ -207,10 +206,10 @@ X = 10.
 im_a_var
 x = 10
 
-Module  # this is called an atom alias; it expands to :'Elixir.Module'
+Module  # 这个被称作原子别名；它会被扩展成 :'Elixir.Module'
 ```
 
-It is also possible to create atoms that start with a character other than a lowercase letter. The syntax is different between the two languages:
+创建一个不以小写字母开头的原子也是可以的。只是这两个语言的语法不同：
 
 **Erlang**
 
@@ -231,14 +230,14 @@ is_atom :"Multiple words"   #=> true
 is_atom :""                 #=> true
 ```
 
-### Tuples
+### 元组
 
-The syntax for tuples is the same in both languages, but the APIs are different. Elixir attempts to normalize Erlang libraries in a way that:
+在两个语言中元组的语法是相同的，但 API 却不同。 Elixir 尝试用以下的方式规范 Erlang 的库：
 
-1. The `subject` of the function is always the first argument.
-2. All data structures functions employ zero-based access.
+1. 函数的 `subject` 总是第一个参数。
+2. 所有的数据结构函数使用从零开始的访问。
 
-That said, Elixir does not import the default `element` and `setelement` functions, but instead provides `elem` and `put_elem`:
+不过， Elixir 不提供默认的 `element` 和 `setelement` 函数，替代它们的是 `elem` 和 `put_elem`：
 
 **Erlang**
 
@@ -254,9 +253,9 @@ elem({:a, :b, :c}, 0)         #=> :a
 put_elem({:a, :b, :c}, 0, :d) #=> {:d, :b, :c}
 ```
 
-### Lists and binaries
+### 列表和二进制
 
-Elixir has a shortcut syntax for binaries:
+Elixir 有一个针对二进制的快捷语法：
 
 **Erlang**
 
@@ -275,9 +274,9 @@ is_binary <<"Hello">>    #=> true
 <<"Hello">> === "Hello"  #=> true
 ```
 
-In Elixir, the word **string** means a UTF-8 binary and there is a `String` module that works on such data. Elixir also expects your source files to be UTF-8 encoded. On the other hand, **string** in Erlang refers to char lists and there is a `:string` module, that's not UTF-8 aware and works mostly with char lists.
+在 Elixir 中， **字符串** 这个词的意思是指一个 UTF-8 的二进制，并且有一个 `String` 模块用来处理这种数据。 Elixir 还期望你的源文件是用 UTF-8 编码的。另一方面， Erlang 中的 **字符串** 指的是字符列表，并且有一个非 UTF-8 感知的 `:string` 模块用于处理字符列表。
 
-Elixir also supports multiline strings (also called *heredocs*):
+Elixir 还支持多行字符串 （又被称作 *heredocs*）：
 
 ```elixir
 is_binary """
@@ -288,9 +287,9 @@ lines.
 #=> true
 ```
 
-### Keyword list
+### 关键字列表
 
-Elixir offers a literal syntax for creating a list of two-item tuples where the first item in the tuple is an atom and calls them keyword lists:
+Elixir 提供了一个字面语法来创建一个第一个元素是原子二元元组的列表，称为关键字列表：
 
 **Erlang**
 
@@ -308,9 +307,9 @@ kw[:another_key]
 #=> 20
 ```
 
-### Maps
+### 映射
 
-Erlang R17 introduced maps, a key-value store, with no ordering. Keys and values can be any term. Creating, updating and matching maps in both languages is shown below:
+Erlang R17 添加了映射，一个无序的 key-value 存储。键和值可以是任意类型。 如下，在两种语言中创建，更新和匹配映射：
 
 **Erlang**
 
@@ -332,7 +331,7 @@ value === 1
 #=> true
 ```
 
-If the keys are all atoms, Elixir allows developers to use `key: 0` for defining the map as well as using `.key` for accessing fields:
+如果键全部都是原子， Elixir 允许开发都用 `key: 0` 的方式来定义一个映射，并且可以用 `.key` 的方式来访问字段：
 
 ```elixir
 map = %{key: 0}
@@ -340,9 +339,9 @@ map = %{map | key: 1}
 map.key === 1
 ```
 
-### Regular expressions
+### 正则表达式
 
-Elixir supports a literal syntax for regular expressions. Such syntax allows regexes to be compiled at compilation time instead of runtime and does not require you to double escape special regex characters:
+Elixir 支持一个正则表达式的字面语法。 这种语法允许正则在编译期编译而不是在运行时，并且不需要你二次转义特殊的正则字符：
 
 **Erlang**
 
@@ -359,7 +358,7 @@ Regex.run ~r/abc\s/, "abc "
 #=> ["abc "]
 ```
 
-Regexes are also supported in heredocs, which is convenient when defining multiline regexes:
+正则表达式同样支持 hrerdocs，用于方便地定义多行正则：
 
 ```elixir
 Regex.regex? ~r"""
@@ -371,9 +370,9 @@ lines.
 ```
 
 
-## Modules
+## 模块
 
-Each Erlang module lives in its own file which has the following structure:
+每个 Erlang 模块保存在各自的文件中，并且有如下的结构：
 
 ```erlang
 -module(hello_module).
@@ -392,9 +391,9 @@ priv() ->
   secret_info.
 ```
 
-Here we create a module named ``hello_module``. In it we define three functions, the first two are made available for other modules to call via the ``export`` directive at the top. It contains a list of functions, each of which is written in the format ``<function name>/<arity>``. Arity stands for the number of arguments.
+这里我们创建了一个名为 ``hello_module`` 的模块。其中我们定义了三个函数，前两个通过用开头的 ``export`` 指令可以被其它模块调用。它包含了一个函数的列表，每个函数用 ``<function name>/<arity>`` 这样的格式来写。元数（arity）指的是参数数量。
 
-An Elixir equivalent to the Erlang above:
+上面的 Erlang 代码用 Elixir 等效地表示如下：
 
 ```elixir
 defmodule HelloModule do
@@ -415,7 +414,7 @@ defmodule HelloModule do
 end
 ```
 
-In Elixir, it is also possible to have multiple modules in one file, as well as nested modules:
+在 Elixir 中，可以在同一个文件中写多个模块，还可以写嵌套模块：
 
 ```elixir
 defmodule HelloModule do
@@ -448,15 +447,15 @@ HelloModule.Utils.priv
 ```
 
 
-## Function syntax
+## 函数语法
 
-[This chapter][3] from the Erlang book provides a detailed description of pattern matching and function syntax in Erlang. Here, I'm briefly covering the main points and provide sample code both in Erlang and Elixir.
+Erlang 书本中的 [这一章][3] 提供了一份关于 Erlang 中模式匹配和函数语法详细的描述。这里，我简单地概括一下要点并给出分别用 Erlang 和 Elixir 写的示例代码。
 
 [3]: http://learnyousomeerlang.com/syntax-in-functions
 
-### Pattern matching
+### 模式匹配
 
-Pattern matching in Elixir is based on Erlang's implementation and in general is very similar:
+Elixir 中的模式匹配是基于 Erlang 的实现的，基本上是非常相似的：
 
 **Erlang**
 
@@ -486,7 +485,7 @@ When defining a function with the same name multiple times, each such definition
 
 Elixir doesn't require punctuation to separate clauses, but they must be grouped together.
 
-### Identifying functions
+### 标识函数
 
 In both Erlang and Elixir, a function is not identified only by its name, but by its name and arity. In both examples below, we are defining four different functions (all named `sum`, but with different arity):
 
@@ -568,9 +567,9 @@ mul_by 4, 3 #=> 12
 mul_by 4    #=> 8
 ```
 
-### Anonymous functions
+### 匿名函数
 
-Anonymous functions are defined in the following way:
+匿名函数用以下的方式定义：
 
 **Erlang**
 
@@ -596,7 +595,7 @@ Enum.map [1, 2, 3, 4], square
 #=> [1, 4, 9, 16]
 ```
 
-It is possible to use pattern matching when defining anonymous functions, too.
+定义匿名函数的时候同样也可以使用模式匹配。
 
 **Erlang**
 
@@ -688,7 +687,7 @@ Enum.map [1, 2, 3], &Math.square/1
 ```
 
 
-## Control flow
+## 控制流
 
 The constructs `if` and `case` are actually expressions in both Erlang and Elixir, but may be used for control flow as in imperative languages.
 
@@ -785,7 +784,7 @@ else
 end
 ```
 
-### Sending and receiving messages
+### 发送和接收消息
 
 The syntax for sending and receiving differs only slightly between Erlang and Elixir.
 
@@ -820,7 +819,7 @@ end
 ```
 
 
-## Adding Elixir to existing Erlang programs
+## 把 Elixir 添加到现有的 Erlang 程序中
 
 Elixir compiles into BEAM byte code (via Erlang Abstract Format). This means that Elixir code can be called from Erlang and vice versa, without the need to write any bindings. All Elixir modules start with the `Elixir.` prefix followed by the regular Elixir name. For example, here is how to use the utf-8 aware `String` downcase from Elixir in Erlang:
 
@@ -832,7 +831,7 @@ downcase(Bin) ->
   'Elixir.String':downcase(Bin).
 ```
 
-### Rebar integration
+### Rebar 集成
 
 If you are using rebar, you should be able to include Elixir git repository as a dependency:
 
@@ -848,16 +847,16 @@ Elixir is structured similar to Erlang's OTP. It is divided into applications th
 
 This should be enough to invoke Elixir functions straight from your Erlang code. If you are also going to write Elixir code, you can [install Elixir's rebar plugin for automatic compilation](https://github.com/yrashk/rebar_elixir_plugin).
 
-### Manual integration
+### 手动集成
 
 If you are not using rebar, the easiest approach to use Elixir in your existing Erlang software is to install Elixir using one of the different ways specified in the [Getting Started guide](/getting-started/introduction.html) and add the `lib` directory in your checkout to `ERL_LIBS`.
 
 
-## Further reading
+## 深入阅读
 
-Erlang's official documentation site has a nice [collection][4] of programming examples. It can be a good exercise to translate them into Elixir. [Erlang cookbook][5] offers even more useful code examples.
+Erlang 的官方文档网站有一批优秀的编程实例。把它们翻译成 Elixir 将会是一个很好的练习。 [Erlang cookbook][5] 提供了更多有用的代码范例。
 
-Elixir also provides a [Getting Started Guide][6] and has [documentation available online][7].
+Elixir 还提供了一份 [入门教程][6] 和 [在线文档][7]。
 
 [4]: http://www.erlang.org/doc/programming_examples/users_guide.html
 [5]: http://schemecookbook.org/Erlang/TOC

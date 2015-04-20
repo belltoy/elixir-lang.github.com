@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Macros
+title: 宏
 redirect_from: /getting_started/meta/2.html
 ---
 
@@ -14,7 +14,7 @@ Even though Elixir attempts its best to provide a safe environment for macros, t
 
 Elixir already provides mechanisms to write your every day code in a simple and readable fashion. Macros should only be used as a last resort. Remember that **explicit is better than implicit**. **Clear code is better than concise code.**
 
-## Our first macro
+## 我们的第一个宏
 
 Macros in Elixir are defined via `defmacro/2`.
 
@@ -200,7 +200,7 @@ end
 
 Take note of the second argument to `Macro.var/2`. This is the context being used and will determine hygiene as described in the next section.
 
-## The environment
+## 环境
 
 When calling `Macro.expand_once/2` earlier in this chapter, we used the special form `__ENV__`.
 
@@ -221,7 +221,7 @@ iex> __ENV__.requires
 
 Many of the functions in the `Macro` module expect an environment. You can read more about these functions in [the docs for the `Macro` module](/docs/stable/elixir/#!Macro.html) and learn more about the compilation environment in the [docs for `Macro.Env`](/docs/stable/elixir/#!Macro.Env.html).
 
-## Private macros
+## 私有宏
 
 Elixir also supports private macros via `defmacrop`. As private functions, these macros are only available inside the module that defines them, and only at compilation time.
 

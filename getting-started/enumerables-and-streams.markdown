@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Enumerables and Streams
+title: 可枚举开类和流
 redirect_from: /getting_started/10.html
 ---
 
@@ -8,9 +8,9 @@ redirect_from: /getting_started/10.html
 
 {% include toc.html %}
 
-## Enumerables
+## 可枚举类型
 
-Elixir provides the concept of enumerables and [the `Enum` module](/docs/stable/elixir/#!Enum.html) to work with them. We have already learned two enumerables: lists and maps.
+Elixir 提供了可枚举类型的概念和用于处理它们的 [`Enum` 模块](/docs/stable/elixir/#!Enum.html)。我们已经学过两种可枚举类型：列表和 map。
 
 ```iex
 iex> Enum.map([1, 2, 3], fn x -> x * 2 end)
@@ -19,9 +19,9 @@ iex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)
 [2, 12]
 ```
 
-The `Enum` module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.
+`Enum` 模块提供了大量的函数用于转换，排序，分组，过滤和获取可枚举类型中的元素。 在 Elixir 代码中它是开发者最常用的模块之一。
 
-Elixir also provides ranges:
+Elixir 还提供了范围类型（range）：
 
 ```iex
 iex> Enum.map(1..3, fn x -> x * 2 end)
@@ -30,13 +30,13 @@ iex> Enum.reduce(1..3, 0, &+/2)
 6
 ```
 
-Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the `List.insert_at/3` function from [the `List` module](/docs/stable/elixir/#!List.html), as it would make little sense to insert a value into, for example, a range.
+由于 Enum 模块被设计成能够跨不同数据类型工作，它的 API 只包含那些能够通用于多种不同数据类型的函数。对一些特殊的操作，你也许需要用到专门针对那个数据类型的模块。例如，如果你要向一个列表的特定位置插入一个元素，你要用到 [`List` 模块](/docs/stable/elixir/#!List.html) 中的 `List.insert_at/3` 函数，但是向一个范围类型（range）中插入一个值就显得没有意义了。
 
-We say the functions in the `Enum` module are polymorphic because they can work with diverse data types. In particular, the functions in the `Enum` module can work with any data type that implements [the `Enumerable` protocol](/docs/stable/elixir/#!Enumerable.html). We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.
+我们说在 `Enum` 模块中的函数是多态的，因为它们能够用于多种数据类型。在实践中， `Enum` 模块中的函数能够用于任何实现了 [`Enumerable` 协议](/docs/stable/elixir/#!Enumerable.html) 的数据类型。我们将在之后的章节中讨论协议（Protocol），现在我们继续学习一种可枚举类型的特例，流。
 
-## Eager vs Lazy
+## 及早求值 vs 惰性求值
 
-All the functions in the `Enum` module are eager. Many functions expect an enumerable and return a list back:
+所有 `Enum` 模块中的函数都是及早求值（eager）的。很多函数期望一个可枚举类型并且返回一个列表：
 
 ```iex
 iex> odd? = &(rem(&1, 2) != 0)
@@ -45,53 +45,53 @@ iex> Enum.filter(1..3, odd?)
 [1, 3]
 ```
 
-This means that when performing multiple operations with `Enum`, each operation is going to generate an intermediate list until we reach the result:
+这意味着当用 `Enum` 进行多次操作的时候，每个操作都会生成一个中间列表，直到我们得到结果。
 
 ```iex
 iex> 1..100_000 |> Enum.map(&(&1 * 3)) |> Enum.filter(odd?) |> Enum.sum
 7500000000
 ```
 
-The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with `100_000` items. Then we keep all odd elements from the list, generating a new list, now with `50_000` items, and then we sum all entries.
+上面是一个管道操作的例子。我们从一个范围开始，然后对范围中的每个值乘 3 。第一个操作会创建并返回一个包含 `100_000` 个元素的列表。然后我们返回列表中所有的奇数元素，生成一个新的列表，现在有 `50_000` 个元素，然后对所有的元素求和。
 
-### The pipe operator
+### 管道操作符
 
-The `|>` symbol used in the snippet above is the **pipe operator**: it simply takes the output from the expression on its left side and passes it as the input to the function call on its right side. It's similar to the Unix `|` operator.  Its purpose is to highlight the flow of data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the `|>` operator:
+上面代码片断中用到的 `|>` 符号是 **管道操作符**：它简单地将它左边表达式的输出传给右边的函数调用。它和 Unix 的 `|` 操作符类似。其目的是突出数据被一系列函数转换的过程。如果将上面的例子不用 `|>` 操作符来重写，就可以看出管道操作符是如何简化代码了：
 
 ```iex
 iex> Enum.sum(Enum.filter(Enum.map(1..100_000, &(&1 * 3)), odd?))
 7500000000
 ```
 
-Find more about the pipe operator [by reading its documentation](/docs/stable/elixir/#!Kernel.html#|>/2).
+[阅读管道操作符的文档](/docs/stable/elixir/#!Kernel.html#|>/2) 来了解更多。
 
-## Streams
+## 流
 
-As an alternative to `Enum`, Elixir provides [the `Stream` module](/docs/stable/elixir/#!Stream.html) which supports lazy operations:
+作为 `Enum` 的一个替代品， Elixir 提供了 [`Stream` 模块](/docs/stable/elixir/#!Stream.html) 支持惰性（lazy）操作：
 
 ```iex
 iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum
 7500000000
 ```
 
-Streams are lazy, composable enumerables.
-Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the `Enum` module. Streams are useful when working with large, *possibly infinite*, collections.
+流是惰性的，可组合的可枚举类型。
+流创建了一系列的计算，只有在传给 `Enum` 模块的时候才会调用，而不是生成一个中间结果的列表。当处理大型的，*可能是无限的*，数据集的时候，流是非常有用的。
 
-They are lazy because, as shown in the example above, `1..100_000 |> Stream.map(&(&1 * 3))` returns a data type, an actual stream, that represents the `map` computation over the range `1..100_000`:
+它们是惰性的是因为，如上面的例子所示， `1..100_000 |> Stream.map(&(&1 * 3))` 返回一个数据类型，一个流，它表示对范围 `1..100_00` 的 `map` 运算。
 
 ```iex
 iex> 1..100_000 |> Stream.map(&(&1 * 3))
 #Stream<[enum: 1..100000, funs: [#Function<34.16982430/1 in Stream.map/2>]]>
 ```
 
-Furthermore, they are composable because we can pipe many stream operations:
+进一步说，它们是可组合的是因为我们可以把多个流的操作用管道连接起来：
 
 ```iex
 iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?)
 #Stream<[enum: 1..100000, funs: [...]]>
 ```
 
-Many functions in the `Stream` module accept any enumerable as argument and return a stream as result. It also provides functions for creating streams, possibly infinite. For example, `Stream.cycle/1` can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like `Enum.map/2` on such streams, as they would cycle forever:
+很多在 `Stream` 模块中的函数接受任意的可枚举类型作为参数并返回一个流作为结果。它还提供了用于创建流，可能是无限的流的函数。例如， `Stream.cycle/1` 可以用来创建一个在给定的可枚举类型上的无限反复的流。注意不要对这样的流调用像 `Enum.map/2` 这样的函数，这可能会导致死循环：
 
 ```iex
 iex> stream = Stream.cycle([1, 2, 3])
@@ -100,7 +100,7 @@ iex> Enum.take(stream, 10)
 [1, 2, 3, 1, 2, 3, 1, 2, 3, 1]
 ```
 
-On the other hand, `Stream.unfold/2` can be used to generate values from a given initial value:
+另一方面， `Stream.unfold/2` 可以用来从一个给定的初始值生成一个流：
 
 ```iex
 iex> stream = Stream.unfold("hełło", &String.next_codepoint/1)
@@ -109,7 +109,7 @@ iex> Enum.take(stream, 3)
 ["h", "e", "ł"]
 ```
 
-Another interesting function is `Stream.resource/3` which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:
+另一个有趣的函数是 `Stream.resource/3`，可以用来包装资源，保证它们在枚举操作之前打开，结束之后关闭，甚至是失败的情况。例如，我们可以用它来流化一个文件：
 
 ```iex
 iex> stream = File.stream!("path/to/file")
@@ -117,8 +117,8 @@ iex> stream = File.stream!("path/to/file")
 iex> Enum.take(stream, 10)
 ```
 
-The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.
+上面的例子会取到你所选择的文件的前 10 行。这意味着对于处理大型文件或者如网络资源这类的慢资源的时候，流会非常有用。
 
-The amount of functions and functionality in [`Enum`](/docs/stable/elixir/#!Enum.html) and [`Stream`](/docs/stable/elixir/#!Stream.html) modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the `Enum` module first and only move to `Stream` for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.
+在 [`Enum`](/docs/stable/elixir/#!Enum.html) 和 [`Stream`](/docs/stable/elixir/#!Stream.html) 模块中的函数和功能和数量咋看起来挺吓人的，但你通过一个个用例来熟悉它们。尤其是，先专注于 `Enum` 模块，只有在处理慢资源，大型的，可能是无限的数据集，这些需要惰性操作的时候，这些特定场景才选择用 `Stream`。
 
-Next we'll look at a feature central to Elixir, Processes, which allows us to write concurrent, parallel and distributed programs in an easy and understandable way.
+接下来我们将会看看 Elixir 的一个核心特性，进程，它允许我们用简单的而且容易理解的方式编写并发并发的，并行的和分布式的程序。
