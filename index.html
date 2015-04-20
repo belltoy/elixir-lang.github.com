@@ -8,23 +8,23 @@ layout: default
     <img src="/images/contents/home-code.png" alt="Elixir Sample" class="archive-thumbnail" />
 
     <div class="entry-summary">
-      <p>Elixir is a dynamic, functional language designed for building scalable and maintainable applications.</p>
+      <p>Elixir 是一门动态的，函数式的语言，它被设计用于构建可扩展和可维护的应用程序。</p>
 
-      <p>Elixir leverages the Erlang VM, known for running low-latency, distributed and fault-tolerant systems, while also being successfully used in web development and the embedded software domain.</p>
+      <p>Elixir 基于 Erlang 虚拟机，一个低延时、分布式和容错性的系统，同时也成功用于 web 开发和嵌入式软件领域。</p>
 
-      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. Or keep reading to get an overview of the platform, language and tools.</p>
+      <p>要了解更多关于 Elixir 的内容，访问我们的<a href="/getting-started/introduction.html">入门教程</a>。或者继续往下阅读关于平台、语言和工具的概述。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h3>Platform features</h3>
+    <h3>平台特性</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Scalability</h4>
+    <h4>可扩展性</h4>
     <div class="entry-summary">
 
-      <p>All Elixir code runs inside lightweight threads of execution (called processes) that are isolated and exchange information via messages:</p>
+      <p>所有 Elixir 代码运行的内部轻量级的线程（我们称之为进程）都是彼此隔离的，并且通过消息进行消息交换：</p>
 
 {% highlight elixir %}
 parent = self()
@@ -40,19 +40,19 @@ receive do
 end
 {% endhighlight %}
 
-      <p>Due to their lightweight nature, it is not uncommon to have hundreds of thousands of processes running <i>concurrently</i> in the same machine. Isolation allows processes to be garbage collected independently, reducing system-wide pauses, and using all machine resources as efficiently as possible (vertical scaling).</p>
+      <p>由于其轻量的特性，常常同一台机器上<i>同时</i>运行着数十万进程。进程间的隔离允许进程被单独地进行垃圾回收，减少系统停顿，并且尽可能有效地利用所有的机器资源（垂直扩展）。</p>
 
-      <p>Processes are also able to communicate with other processes running on different machines in the same network. This provides the foundation for distribution, allowing developers to coordinate work across multiple nodes (horizontal scaling).</p>
+      <p>进程也能与运行在同一网络中不同机器上的进程进行通讯。这为分布式提供了基础，允许开发者能够协调跨越多个节点的工作（水平扩展）。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Fault-tolerance</h4>
+    <h4>容错性</h4>
 
     <div class="entry-summary">
-      <p>The unavoidable truth about software running in production is that <i>things will go wrong</i>. Even more when we take network, file systems and other third-party resources into account.</p>
+      <p>在生产环境中运行软件时不可避免的事实是<i>总有东西会出错</i>。当我们使用网络、文件系统和第三方资源的时候，错误会更经常发生。</p>
 
-      <p>To cope with failures, Elixir provides supervisors which describe how to restart parts of your system when things go awry, going back to a known initial state that is guaranteed to work:</p>
+      <p>为了应对各种帮故障，Elixir 提供了监控进程，它描述了当有东西出错的时候如何重启你的部分系统，让它回到已知的确保保能够工作的初始状态：</p>
 
 {% highlight elixir %}
 import Supervisor.Spec
@@ -68,21 +68,21 @@ Supervisor.start_link(children, strategy: :one_for_one)
   </div>
 
   <div class="hentry post">
-    <h3>Language features</h3>
+    <h3>语言特性</h3>
   </div>
 
   <div class="hentry post">
-    <h4>Functional programming</h4>
+    <h4>函数式编程</h4>
 
     <div class="entry-summary">
-      <p>Functional programming promotes a coding style that helps developers write code that is short, fast, and maintainable. For example, pattern matching allows developers to easily destructure data and access its contents:</p>
+      <p>函数式编程提倡开发者写出简洁、快速和可维护的代码风格。例如，模式匹配可以让开发者轻松地解构数据并访问其内容：</p>
 
 {% highlight elixir %}
 %User{name: name, age: age} = User.get("John Doe")
 name #=> "John Doe"
 {% endhighlight %}
 
-      <p>When mixed with guards, pattern matching allows us to elegantly match and assert specific conditions for some code to execute:</p>
+      <p>配合 guard 表达式，模式匹配可以让我们在一些代码中优雅地匹配并断言具体的条件：</p>
 
 {% highlight elixir %}
 def serve_drinks(%User{age: age}) when age >= 21 do
@@ -93,17 +93,17 @@ serve_drinks User.get("John Doe")
 #=> Fails if the user is under 21
 {% endhighlight %}
 
-      <p>Elixir relies heavily on those features to ensure your software is working under the expected constraints. And when it is not, don't worry, supervisors got your back!</p>
+      <p>Elixir 在很大程度上依赖那些功能，以确保你的软件能够在预期的约束下工作。当遇到意外的情况时，别担心，监控进程能够替你断后！</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Extensibility and DSLs</h4>
+    <h4>可扩展性和领域特定语言</h4>
 
     <div class="entry-summary">
-      <p>Elixir has been designed to be extensible, letting developers naturally extend the language to particular domains, in order to increase their productivity.</p>
+      <p>Elixir 被设计成可扩展的，为了提高生产效率，开发者能够自然地将语言扩展到特定的领域。</p>
 
-      <p>As an example, let's write a simple test case using <a href="/docs/stable/ex_unit/">Elixir's test framework called ExUnit</a>:</p>
+      <p>举个例子，我们用<a href="/docs/stable/ex_unit/">Elixir 的测试框架 ExUnit</a> 来写一个简单的测试用例：</p>
 
 {% highlight elixir %}
 defmodule MathTest do
@@ -115,19 +115,19 @@ defmodule MathTest do
 end
 {% endhighlight %}
 
-      <p>The <code>async: true</code> option allows <code>test</code>s to run in parallel, using as many CPU cores as possible, while the <code>assert</code> functionality can introspect your code, providing great reports in case of failures. Those features are built using Elixir macros, making it possible to add new constructs as if they were part of the language itself.</p>
+      <p><code>async: true</code>选项允许<code>test</code>并发地执行，尽可能地利用 CPU 内核，而<code>assert</code>功能可以检测你的代码，当失败时提供详尽的报告。这些功能是用 Elixir 的宏构建的，使得添加新的结构成为可能，这些结构就像是这个语言本身的一部分。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h3>Tooling features</h3>
+    <h3>工具特性</h3>
   </div>
 
   <div class="hentry post">
-    <h4>A growing ecosystem</h4>
+    <h4>一个正在成长的生态系统</h4>
 
     <div class="entry-summary">
-      <p>Elixir ships with a great set of tools to ease development. <a href="/docs/stable/mix/">Mix is a build tool</a> that allows you to easily create projects, manage tasks, run tests and more:</p>
+      <p>Elixir 附带了一个强大的工具来简化开发。<a href="/docs/stable/mix/">Mix 构建工具</a>让你可以轻松地创建项目，管理任务，运行测试等等：</p>
 
 {% highlight text %}
 $ mix new my_app
@@ -139,15 +139,15 @@ Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
 1 tests, 0 failures
 {% endhighlight %}
 
-      <p>Mix is also able to manage dependencies and integrates nicely with the <a href="http://hex.pm/">Hex package manager</a>, which provides dependency resolution and the ability to remotely fetch packages.</p>
+      <p>Mix 还名能管理依赖，并很好地集成了<a href="http://hex.pm/">Hex 包管理器</a>，它提供了依赖解决方案和远程获取包的功能。</p>
     </div>
   </div>
 
   <div class="hentry post">
-    <h4>Interactive development</h4>
+    <h4>交互式开发</h4>
 
     <div class="entry-summary">
-      <p>Tools like <a href="/docs/stable/iex/">IEx (Elixir's interactive shell)</a> are able to leverage many aspects of the language and platform to provide auto-complete, debugging tools, code reloading, as well as nicely formatted documentation:</p>
+      <p>像 <a href="/docs/stable/iex/">IEx (Elixir 的交互式 shell)</a> 这样的工具能够利用这个语言和平台的许多方面，提供自动完成，调试工具，代码重载，还有良好格式化的文档：</p>
 
 {% highlight text %}
 $ iex
@@ -160,17 +160,17 @@ iex> h IEx.pry             # Prints the documentation for IEx pry functionality
   </div>
 
   <div class="hentry post">
-    <h4>Erlang compatible</h4>
+    <h4>Erlang 兼容</h4>
 
     <div class="entry-summary">
-      <p>Elixir runs on the Erlang VM giving developers complete access to Erlang's ecosystem, used by companies like <a href="https://www.heroku.com">Heroku</a>, <a href="http://www.whatsapp.com">Whatsapp</a>, <a href="https://klarna.com">Klarna</a>, <a href="http://basho.com">Basho</a> and many more to build distributed, fault-tolerant applications. An Elixir programmer can invoke any Erlang function with no runtime cost:</p>
+      <p>Elixir 运行在 Erlang 虚拟机上，这允许开发者能够完全地访问 Erlang 的生态系统，使用像<a href="https://www.heroku.com">Heroku</a>, <a href="http://www.whatsapp.com">Whatsapp</a>, <a href="https://klarna.com">Klarna</a>, <a href="http://basho.com">Basho</a>等等来构建分布式、容错性的应用。一个 Elixir 程序员能够调用任何 Erlang 函数而没有运行时代价：</p>
 
 {% highlight iex %}
 iex> :crypto.md5("Using crypto from Erlang OTP")
 <<192,223,75,115,...>>
 {% endhighlight %}
 
-      <p>To learn more about Elixir, check our <a href="/getting-started/introduction.html">getting started guide</a>. We also have <a href="/docs.html">online documentation available</a> and a <a href="/crash-course.html">Crash Course for Erlang developers</a>.</p>
+      <p>要了解更多关于 Elixir 的内容，访问我们的<a href="/getting-started/introduction.html">入门教程</a>。 我们也有<a href="/docs.html">在线文档</a> 和一个<a href="/crash-course.html">对于 Erlang 开发者的速成课</a>。</p>
     </div>
   </div>
 </div>
