@@ -8,12 +8,11 @@ redirect_from: /getting_started/16.html
 
 {% include toc.html %}
 
-协议是 Elixir 中实现多态的机制。对于任何只要实现了协议数据类型都可以使用该协议的分派。让我们来看一个例子。
-Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let's see an example.
+协议是 Elixir 中实现多态的机制。对于任何只要实现了协议数据类型都可以使用该协议上的函数。让我们来看一个例子。
 
-In Elixir, only `false` and `nil` are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a `blank?` protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.
+在 Elixir 中，只有 `false` 和 `nil` 被当作「假」。其它所有的都为真。 对于某些应用，也许规范一个 `blank?` 协议是非常重要的，它对其它数据类型中应该被认为是空的值返回一个布尔值。例如，一个空列表或者一个空的二进制可以被认为是空值。
 
-We could define this protocol as follows:
+我们可以这样定义这个协议：
 
 ```elixir
 defprotocol Blank do
@@ -22,7 +21,7 @@ defprotocol Blank do
 end
 ```
 
-The protocol expects a function called `blank?` that receives one argument to be implemented. We can implement this protocol for different Elixir data types as follows:
+这个协议期待一个名为 `blank?` 的函数实现，它接收一个参数。我们可以这样为 Elixir 中的不同数据类型实现这个协议：
 
 ```elixir
 # Integers are never blank
@@ -52,7 +51,7 @@ defimpl Blank, for: Atom do
 end
 ```
 
-And we would do so for all native data types. The types available are:
+我们也可以对所有的内置数据类型这么做。这些类型包括：
 
 * `Atom`
 * `BitString`
@@ -66,7 +65,7 @@ And we would do so for all native data types. The types available are:
 * `Reference`
 * `Tuple`
 
-Now with the protocol defined and implementations in hand, we can invoke it:
+现在我们手里有了这个协议的定义和实现，我们可以调用它了：
 
 ```iex
 iex> Blank.blank?(0)
@@ -77,7 +76,7 @@ iex> Blank.blank?([1, 2, 3])
 false
 ```
 
-Passing a data type that does not implement the protocol raises an error:
+传入一个未实现这个协议的数据类型会引发一个错误：
 
 ```iex
 iex> Blank.blank?("hello")
@@ -86,9 +85,9 @@ iex> Blank.blank?("hello")
 
 ## 协议和 Struct
 
-The power of Elixir's extensibility comes when protocols and structs are used together.
+当协议和 struct 结合在一起使用的时候， Elixir 的可扩展性的力量就能显现出来了。
 
-In the [previous chapter](/getting-started/structs.html), we have learned that although structs are maps, they do not share protocol implementations with maps. Let's define a `User` struct as in that chapter:
+在 [上一章](/getting-started/structs.html) 中，我们已经学习了虽然 struct 是 map，但它并没有与 map 共享协议的实现。让我们像在上一章中那样定义一个 `User` 的 struct：
 
 ```iex
 iex> defmodule User do
@@ -98,7 +97,7 @@ iex> defmodule User do
  <<70, 79, 82, ...>>, {:__struct__, 0}}
 ```
 
-And then check:
+然后检查：
 
 ```iex
 iex> Blank.blank?(%{})
@@ -107,7 +106,7 @@ iex> Blank.blank?(%User{})
 ** (Protocol.UndefinedError) protocol Blank not implemented for %User{age: 27, name: "john"}
 ```
 
-Instead of sharing protocol implementation with maps, structs require their own protocol implementation:
+Struct 并没有和 map 共享协议的实现，struct 需要它们自己的协议实现：
 
 ```elixir
 defimpl Blank, for: User do
@@ -115,13 +114,13 @@ defimpl Blank, for: User do
 end
 ```
 
-If desired, you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as `Enumerable` and possibly `Blank`, for this data type.
+如果有需要，你可以为一个空白用户提供你自己的语义。不仅如此，你可以使用 struct 来构建更加健壮的数据类型，如队列，并为这个数据类型实现所有相关的协议，例如 `Enumerable` 和 `Blank`。
 
-In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That's when falling back to `Any` comes in handy.
+尽管在很多情况下，开发者也许想为 struct 提供一个默认的实现，因为为所有的 struct 明确地实现一个协议会很单调。这种时候 falling back to `Any` 就显得很有用。
 
 ## Falling back to `Any`
 
-It may be convenient to provide a default implementation for all types. This can be achieved by setting `@fallback_to_any` to `true` in the protocol definition:
+为所有的数据类型提供一个默认的实现，将会是非常方便的。这可以通过在协议的定义中设置 `@fallback_to_any` 为 `true` 来得到：
 
 ```elixir
 defprotocol Blank do
@@ -130,7 +129,7 @@ defprotocol Blank do
 end
 ```
 
-Which can now be implemented as:
+它也可以这样实现：
 
 ```elixir
 defimpl Blank, for: Any do
@@ -138,11 +137,11 @@ defimpl Blank, for: Any do
 end
 ```
 
-Now all data types (including structs) that we have not implemented the `Blank` protocol for will be considered non-blank.
+现在所有我们未实现 `Blank` 协议的数据类型 （包括 struct ）都会被当作非空。
 
 ## 内建协议
 
-Elixir ships with some built-in protocols. In previous chapters, we have discussed the `Enum` module which provides many functions that work with any data structure that implements the `Enumerable` protocol:
+Elixir 包含了一些内建协议。在上一章中，我们已经讨论了 `Enum` 模块，它提供了许多函数作用于任意实现了 `Enumerable` 协议的数据类型：
 
 ```iex
 iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
@@ -150,21 +149,22 @@ iex> Enum.map [1, 2, 3], fn(x) -> x * 2 end
 iex> Enum.reduce 1..3, 0, fn(x, acc) -> x + acc end
 6
 ```
-Another useful example is the `String.Chars` protocol, which specifies how to convert a data structure with characters to a string. It's exposed via the `to_string` function:
+
+另一个有用的例子是 `String.Chars` 协议，它规定了如何将一个包括字符的数据结构转化为字符串。它通过 `to_string` 函数来暴露：
 
 ```iex
 iex> to_string :hello
 "hello"
 ```
 
-Notice that string interpolation in Elixir calls the `to_string` function:
+注意到 Elixir 中的字符串插值会调用这个 `to_string` 函数：
 
 ```iex
 iex> "age: #{25}"
 "age: 25"
 ```
 
-The snippet above only works because numbers implement the `String.Chars` protocol. Passing a tuple, for example, will lead to an error:
+上面的片断能工作是因为数字实现了 `String.Chars` 协议。例如，传入一个元组会导致一个错误：
 
 ```iex
 iex> tuple = {1, 2, 3}
@@ -173,14 +173,14 @@ iex> "tuple: #{tuple}"
 ** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}
 ```
 
-When there is a need to "print" a more complex data structure, one can simply use the `inspect` function, based on the `Inspect` protocol:
+当如果需要打印更加复杂的数据结构的时候，可以简单地使用 `inspect` 函数，它是基于 `Inspect` 协议的：
 
 ```iex
 iex> "tuple: #{inspect tuple}"
 "tuple: {1, 2, 3}"
 ```
 
-The `Inspect` protocol is the protocol used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:
+`Inspect` 协议是用于把任意的数据结构转化为一个可读的文本表示。这是像 Iex 这样的工具用于打印结果的方式：
 
 ```iex
 iex> {1, 2, 3}
@@ -189,11 +189,11 @@ iex> %User{}
 %User{name: "john", age: 27}
 ```
 
-Keep in mind that, by convention, whenever the inspected value starts with `#`, it is representing a data structure in non-valid Elixir syntax. This means the inspect protocol is not reversible as information may be lost along the way:
+牢记，按照惯例，只要打印出来的检视值是以 `#` 开头，它就是用 Elixir 中的非法语法来表示一个数据结构。这意味着 inspect 协议是不可逆的，因为在转化过程中信息可能丢失了：
 
 ```iex
 iex> inspect &(&1+2)
 "#Function<6.71889879/1 in :erl_eval.expr/5>"
 ```
 
-There are other protocols in Elixir but this covers the most common ones.
+Elixir 中还包含其它协议，但本章包含了最常见的几个。
