@@ -1,6 +1,6 @@
 ---
 layout: getting-started
-title: Typespecs 和 behaviours
+title: 类型声明和行为
 redirect_from: /getting_started/20.html
 ---
 
@@ -8,35 +8,35 @@ redirect_from: /getting_started/20.html
 
 {% include toc.html %}
 
-## Types 和 specs
+## 类型和声明
 
-Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with **typespecs**, which are a notation used for:
+Elixir 是一个动态类型语言，所以 Elixir 中所有的类型都是在运行时推断出来的。尽管如此， Elixir 附带了 **类型声明** 标记，它用于：
 
-1. declaring custom data types;
-2. declaring typed function signatures (specifications).
+1. 声明自定义的数据类型；
+2. 声明类型的函数签名（规格）。
 
-### Function specifications
+### 函数规格
 
-By default, Elixir provides some basic types, such as `integer` or `pid`, as well as more complex types: for example, the `round/1` function, which rounds a float to its nearest integer, takes a `number` as an argument (an `integer` or a `float`) and returns an `integer`. As you can see [in its documentation](/docs/stable/elixir/#!Kernel.html#round/1), `round/1`'s typed signature is written as:
+Elixir 默认提供了一些基本类型，像 `integer` 或 `pid`，还有更复杂的类型：例如 `round/1` 函数，它把浮点数舍位成近似的整数，接受一个 `number` 作为参数（一个 `integer` 或 `float`）并返回一个 `integer`。正如你 [在它的文档](/docs/stable/elixir/#!Kernel.html#round/1) 里看到的，`round/1` 的类型签名是这么写的：
 
 ```
 round(number) :: integer
 ```
 
-`::` means that the function on the left side *returns* a value whose type is what's on the right side. Function specs are written with the `@spec` directive, placed right before the function definition. The `round/1` function could be written as:
+`::` 意思是它左侧的函数 *返回* 的是它右侧所示的类型的一个值。函数规格是用 `@spec` 指令来写的，放在函数定义之前。 `round/1` 函数可以如下面这样写：
 
 ```elixir
 @spec round(number) :: integer
 def round(number), do: # implementation...
 ```
 
-Elixir supports compound types as well. For example, a list of integers has type `[integer]`. You can see all the types provided by Elixir [in the typespecs docs](/docs/stable/elixir/#!Kernel.Typespec.html).
+Elixir 还支持混合类型。例如，一个整数列表的类型是 `[integer]`。你可以在 [类型规格文档](/docs/stable/elixir/#!Kernel.Typespec.html) 中看到 Elixir 提供的所有类型。
 
 ### 定义自定义类型
 
-While Elixir provides a lot of useful built-in types, it's convenient to define custom types when appropriate. This can be done when defining modules through the `@type` directive.
+虽然 Elixir 提供了很多有用的内置类型，但它也很方便在适当的时候定义自定义类型。这可以通过在定义模块的时候使用 `@type` 指令定义来定义。
 
-Say we have a `LousyCalculator` module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.
+假设我们有一个 `LousyCalculator` 模块，它提供了有用的算术操作（求和，乘积等等），但是它不是返回数字，而是返回一个元组，它的第一个元素是该操作结果，第二个元素是一个随机字符串。
 
 ```elixir
 defmodule LousyCalculator do
@@ -48,9 +48,9 @@ defmodule LousyCalculator do
 end
 ```
 
-As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why `String.t` is not written as `string`, have another look at the [typespecs docs](/docs/stable/elixir/#!Kernel.Typespec.html).
+正如你在例子中所看到的，元组是一个混合类型，而且每个元组是用它内部的类型标识的。为了理解为什么 `String.t` 不写成 `string`，再看一次 [类型规格文档](/docs/stable/elixir/#!Kernel.Typespec.html)。
 
-Defining function specs this way works, but it quickly becomes annoying since we're repeating the type `{number, String.t}` over and over. We can use the `@type` directive in order to declare our own custom type.
+定义函数规格可以这么做，但是当我们一次双一次得重复输入 `{number, String.t}` 的时候，它就变得很烦。我们可以用 `@type` 指令来声明我们自己的自定义类型。
 
 ```elixir
 defmodule LousyCalculator do
@@ -67,9 +67,9 @@ defmodule LousyCalculator do
 end
 ```
 
-The `@typedoc` directive, similarly to the `@doc` and `@moduledoc` directives, is used to document custom types.
+`@typedoc` 指令类似 `@doc` 和 `@moduledoc` 指令，它用于为自定义类型标注文档。
 
-Custom types defined through `@type` are exported and available outside the module they're defined in:
+通过 `@type` 定义的自定义类型会被导出，在定义它们模块之后是可用的：
 
 ```elixir
 defmodule PoliteCalculator do
@@ -81,29 +81,29 @@ defmodule PoliteCalculator do
 end
 ```
 
-If you want to keep a custom type private, you can use the `@typep` directive instead of `@type`.
+如果你想要保持一个自定义类型为私有的，你可以使用 `@typep` 指令来替代 `@type`。
 
 ### 静态代码分析
 
-Typespecs are not only useful to developers and as additional documentation. The Erlang tool [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html), for example, uses typespecs in order to perform static analysis of code. That's why, in the `PoliteCalculator` example, we wrote a spec for the `make_polite/1` function even if it was defined as a private function.
+类型规格不是唯一一个对开发者和附加文档有用的东西。 例如， Erlang 工具 [Dialyzer](http://www.erlang.org/doc/man/dialyzer.html) 使用类型规格来静态地分析代码。这正是为什么在 `PoliteCaculator` 例子中，即使 `make_polite/1` 被定义为一个私有函数，我们仍然为它写了一个规格。
 
 
-## Behaviours
+## 行为
 
-Many modules share the same public API. Take a look at [Plug](https://github.com/elixir-lang/plug), which, as its description states, is a **specification** for composable modules in web applications. Each *plug* is a module which **has to** implement at least two public functions: `init/1` and `call/2`.
+很多模块共享了相同的公开 API。看看 [Plug](https://github.com/elixir-lang/plug)，正如它的描述，它是 web 应用中可组合模块的一个 **规范**。每个 *plug* 都是一个模块，它 *必须* 实现至少这两个公开函数： `init/1` 和 `call/2`。
 
-Behaviours provide a way to:
+行为提供了一个方式来：
 
-* define a set of functions that have to be implemented by a module;
-* ensure that a module implements all the functions in that set.
+* 定义一个模块必须要实现的一组函数；
+* 确保一个模块实现了那个集合里的所有函数。
 
-If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.
+如果需要，你可以认为行为就像是 Java 这种面向对象语言中的接口：一个模块必须要实现的一组函数签名。
 
-### Defining behaviours
+### 定义行为
 
-Say we want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will *behave* the same way: both will provide a `parse/1` function and an `extensions/0` function. The `parse/1` function will return an Elixir representation of the structured data, while the `extensions/0` function will return a list of file extensions that can be used for each type of data (e.g., `.json` for JSON files).
+假设我们要实现一系列解析器，每个解析器都解析结构化的数据：例如，一个 JSON 解析器和一个 YMAL 解析器。这两个解析器每个都以相同的方式 *运行*：两者都提供一个 `parse/1` 函数和一个 `extensions/0` 函数。 `parse/1` 函数会返回一个 Elixir 表示的结构化数据， `extensions/0` 函数会返回一个文件名后缀的列表，它可以用于每种类型的数据（例如， `.json` 对应 JSON 文件）。
 
-We can create a `Parser` behaviour:
+我们可以创建一个 `Parser` 行为：
 
 ```elixir
 defmodule Parser do
@@ -114,11 +114,11 @@ defmodule Parser do
 end
 ```
 
-Modules adopting the `Parser` behaviour will have to implement all the functions defined with `defcallback`. As you can see, `defcallback` expects a function name but also a function specification like the ones used with the `@spec` directive we saw above.
+适配 `Parser` 行为的模块必须实现所有 `defcallback` 定义的函数。正如你所看到的， `defcallback` 接受一个函数名，也接受一个函数规格，就像我们上面看到过的 `@spec` 指令那样。
 
-### Adopting behaviours
+### 适配行为
 
-Adopting a behaviour is straightforward:
+适配一个行为很简单：
 
 ```elixir
 defmodule JSONParser do
@@ -138,4 +138,4 @@ defmodule YAMLParser do
 end
 ```
 
-If a module adopting a given behaviour doesn't implement one of the callbacks required by that behaviour, a compile-time warning will be generated.
+如果一个适配了一个给定行为的模块没有实现该行为要求的 callback 中的一个，会生成一个编译期的警告。

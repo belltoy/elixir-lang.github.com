@@ -8,11 +8,11 @@ redirect_from: /getting_started/19.html
 
 {% include toc.html %}
 
-Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.
+Elixir 有三种错误机制： 错误， 抛出和退出。本章中我们将一一探索它们，包括应该何时使用它们。
 
-## Errors
+## 错误
 
-Errors (or *exceptions*) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number into an atom:
+错误（或者 *异常*）用于当代码中异常的情况发生的时候。尝试把一个数字与原子相加，就会得到一个简单的错误：
 
 ```iex
 iex> :foo + 1
@@ -20,21 +20,21 @@ iex> :foo + 1
      :erlang.+(:foo, 1)
 ```
 
-A runtime error can be raised any time by using `raise/1`:
+可以用 `raise/1` 在任何时候引发一个运行时错误：
 
 ```iex
 iex> raise "oops"
 ** (RuntimeError) oops
 ```
 
-Other errors can be raised with `raise/2` passing the error name and a list of keyword arguments:
+其它错误可以用 `raise/2` 来引发，传入错误名字和一个关键词列表参数：
 
 ```iex
 iex> raise ArgumentError, message: "invalid argument foo"
 ** (ArgumentError) invalid argument foo
 ```
 
-You can also define your own errors by creating a module and using the `defexception` construct inside it; this way, you'll create an error with the same name as the module it's defined in. The most common case is to define a custom exception with a message field:
+你也可以通过创建一个模块并在其中使用 `defexception` 结构来定义你自己的错误；这种方法，你会创建一个与模块名相同名字的错误。最常见的例子是定义一个带 message 字段的自定义异常：
 
 ```iex
 iex> defmodule MyError do
@@ -46,7 +46,7 @@ iex> raise MyError, message: "custom message"
 ** (MyError) custom message
 ```
 
-Errors can be **rescued** using the `try/rescue` construct:
+错误可以用 `try/rescue` 结构 **挽救**：
 
 ```iex
 iex> try do
@@ -57,7 +57,7 @@ iex> try do
 %RuntimeError{message: "oops"}
 ```
 
-The example above rescues the runtime error and returns the error itself which is then printed in the `iex` session. In practice, however, Elixir developers rarely use the `try/rescue` construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a `File.read/1` function which returns a tuple containing informations about whether the file was successfully opened:
+上面的例子中，挽救了一个运行时错误并返回这个错误本身，然后在 `iex` 会话中打印出来。然而在实践中，Elixir 开发者很少使用 `try/rescue` 结构。例如，当一个文件无法被成功打开时，许多语言会强制你挽救错误。相反 Elixir 提供了一个 `File.read/1` 函数，它会返回一个包含关于文件是否被成功打开的信息的元组：
 
 ```iex
 iex> File.read "hello"
@@ -68,7 +68,7 @@ iex> File.read "hello"
 {:ok, "world"}
 ```
 
-There is no `try/rescue` here. In case you want to handle multiple outcomes of opening a file, you can simply use pattern matching with the `case` construct:
+这里没有 `try/rescue`。如果你要处理打开文件的不同结果，你可以简单地用 `case` 结构使用模式匹配：
 
 ```iex
 iex> case File.read "hello" do
@@ -77,9 +77,9 @@ iex> case File.read "hello" do
 ...> end
 ```
 
-At the end of the day, it's up to your application to decide if an error while opening a file is exceptional or not. That's why Elixir doesn't impose exceptions on `File.read/1` and many other functions. Instead, it leaves it up to the developer to choose the best way to proceed.
+最终还是由你的应用来决定打开一个文件出现的错误是否是异常。这也是为什么 Elixir 没有在 `File.read/1` 和其它许多函数中强制使用异常。取而代之的是，它把选择最佳处理方式的决定权交给开发者。
 
-For the cases where you do expect a file to exist (and the lack of that file is truly an *error*) you can simply use `File.read!/1`:
+有些情况下你期待一个文件存在（如果不存在那个文件，确实就是一个错误），你可以简单地使用 `File.read!/1`：
 
 ```iex
 iex> File.read! "unknown"
@@ -87,15 +87,15 @@ iex> File.read! "unknown"
     (elixir) lib/file.ex:305: File.read!/1
 ```
 
-Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (`foo`) which returns `{:ok, result}` or `{:error, reason}` tuples and another function (`foo!`, same name but with a trailing `!`) that takes the same arguments as `foo` but which raises an exception if there's an error. `foo!` should return the result (not wrapped in a tuple) if everything goes fine. The [`File` module](/docs/stable/elixir/#!File.html) is a good example of this convention.
+许多标准库中的函数都遵循这种模式，存在一个引发异常的副本而不是一个返回用于匹配的元组。惯例是创建一个返回 `{:ok, result}` 或 `{:error, reason}` 元组的函数（`foo`）和另一个与 `foo` 接受相同参数但如果有错误则引发一个异常的函数（`foo!`，相同的名字但多后面一个 `!`）。 如果执行正常，`foo!` 应该返回结果（不是包装在元组中）。 对于这个惯例， [`File` 模块](/docs/stable/elixir/#!File.html) 是一个很好的例子。
 
-In Elixir, we avoid using `try/rescue` because **we don't use errors for control flow**. We take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, *throws* should be used. That's what we are going to see next.
+有 Elixir 中，我们避免使用 `try/rescue`，因为 **我们不用错误来进行流程控制**。我们仅按字面对待错误：它们就是留给意料之外和/或异常情况的。如果你确实需要流程控制结构，应用使用 *throws*。这正是我们接下来要看到的。
 
-## Throws
+## 抛出
 
-In Elixir, a value can be thrown and later be caught. `throw` and `catch` are reserved for situations where it is not possible to retrieve a value unless by using `throw` and `catch`.
+在 Elixir 中，一个值可以被抛出稍后再被捕获。 `throw` 和 `catch` 用于除了用 `throw` 和 `catch` 之外无法获取一个值的情况。
 
-Those situations are quite uncommon in practice except when interfacing with libraries that do not provide a proper API. For example, let's imagine the `Enum` module did not provide any API for finding a value and that we needed to find the first multiple of 13 in a list of numbers:
+那些情况在实践中很不常见，除非在与一些没有提供良好 API 的库对接的时候。举个例子，试想 `Enum` 模块没有提供查找值的 API，我们又需要在一个数字列表中找到第一个 13 的倍数：
 
 ```iex
 iex> try do
@@ -109,16 +109,16 @@ iex> try do
 "Got -39"
 ```
 
-Since `Enum` *does* provide a proper API, in practice `Enum.find/2` is the way to go:
+然而 `Enum` *确实* 提供了适当的 API ，实践中使用 `Enum.find/2` 就行了：
 
 ```iex
 iex> Enum.find -50..50, &(rem(&1, 13) == 0)
 -39
 ```
 
-## Exits
+## 退出
 
-All Elixir code runs inside processes that communicate with each other. When a process dies of "natural causes" (e.g., unhandled exceptions), it sends an `exit` signal. A process can also die by explicitly sending an exit signal:
+所有的 Elixir 代码都运行在进程中，进程之间相互通信。当一个进程由于 「正常原因」死亡（例如，未处理异常）的时候，它会发出一个 `exit` 信号。一个进程也可以通过显示地向它发送一个退出信号来杀死；
 
 ```iex
 iex> spawn_link fn -> exit(1) end
@@ -126,9 +126,9 @@ iex> spawn_link fn -> exit(1) end
 ** (EXIT from #PID<0.56.0>) 1
 ```
 
-In the example above, the linked process died by sending an `exit` signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.
+在上面的例子中，由于向它发送了一个值为 1 的 `exit` 信号，被链接的进程死亡。Elixir shell 自动处理那些信息并打出在终端里。
 
-`exit` can also be "caught" using `try/catch`:
+`exit` 也可以用 `try/catch` 来「捕获」：
 
 ```iex
 iex> try do
@@ -139,15 +139,15 @@ iex> try do
 "not really"
 ```
 
-Using `try/catch` is already uncommon and using it to catch exits is even more rare.
+使用 `try/catch` 已经是不常见的，用它来捕获退出更是少见。
 
-`exit` signals are an important part of the fault tolerant system provided by the Erlang <abbr title="Virtual Machine">VM</abbr>. Processes usually run under supervision trees which are themselves processes that just wait for `exit` signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.
+`exit` 信号对于由 Erlang <abbr title="Virtual Machine">VM</abbr> 提供的容错系统来说是一个重要的组成部分。进程一般运行在监控树里，监控树其实是等待被监控的进程的 `exit` 信号的进程。一旦收到一个退出信号，监控策略会被触发，然后重启被监控的进程。
 
-It is exactly this supervision system that makes constructs like `try/catch` and `try/rescue` so uncommon in Elixir. Instead of rescuing an error, we'd rather "fail fast" since the supervision tree will guarantee our application will go back to a known initial state after the error.
+这正是为什么这个监控系统使得在 Elixir 中的像 `try/catch` 和 `try/rescue` 这种结构如此少见的原因。与其挽救一个错误，我们更愿意让它「快速失败」，因为监控树会保证我们的应用在出现错误的时候，会回到一个已知的初始状态。
 
 ## After
 
-Sometimes it's necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The `try/after` construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a `try/after` block:
+有时候在一些可能会引发错误操作之后，有必要确保一个资源被清理。 `try/after` 结构允许你这么做。例如，我们可以用 `try/after` 块打开一个文件并确保它会被关闭（甚至是出现一些错误）：
 
 ```iex
 iex> {:ok, file} = File.open "sample", [:utf8, :write]
@@ -162,7 +162,7 @@ iex> try do
 
 ## 变量作用域
 
-It is important to bear in mind that variables defined inside `try/catch/rescue/after` blocks do not leak to the outer context. This is because the `try` block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:
+牢记在 `try/catch/rescue/after` 块中定义的变量不会泄漏到外部的上下文。这是因为 `try` 块可能失败，这样变量可能不会在第一个地方绑定。换句话说，这样的代码是无效的：
 
 ```iex
 iex> try do
@@ -176,4 +176,4 @@ iex> from_after
 ** (RuntimeError) undefined function: from_after/0
 ```
 
-This finishes our introduction to `try`, `catch` and `rescue`. You will find they are used less frequently in Elixir than in other languages although they may be handy in some situations where a library or some particular code is not playing "by the rules".
+到这里我们结束了对 `try`， `catch` 和 `rescue` 的介绍。你会发现它们在 Elixir 中比在其它语言中更少使用，但在一些情况下，某个库或者某些特定的代码不「按规矩」出牌的时候，它们也许会有用。

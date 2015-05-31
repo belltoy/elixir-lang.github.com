@@ -58,7 +58,7 @@
     - title: try, catch 和 rescue
       slug: try-catch-and-rescue
 
-    - title: Typespecs 和 behaviours
+    - title: 类型声明和行为
       slug: typespecs-and-behaviours
 
     - title: 接下来
@@ -102,7 +102,7 @@
 - title: Elixir 中的元编程
   dir: /getting-started/meta/
   pages:
-    - title: 引用（quote）和去引用（unquote）
+    - title: quote 和 unquote
       slug: quote-and-unquote
 
     - title: 宏
